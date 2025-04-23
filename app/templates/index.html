@@ -10,10 +10,27 @@
     <div class="flex-container">
         <div>
             <h2>Input:</h2>
-            <form method="POST">
-                <textarea name="column_data" rows="25" cols="30" placeholder="Paste your column here..."></textarea><br>
+            <form method="POST">            
+                <label>delimiter:
+                    <input type="text" name="delimiter" value="{{ delimiter or ',' }}" />
+                </label><br>
+                <label>item prefix:
+                    <input type="text" name="item_prefix" value="{{ item_prefix or '' }}" />
+                </label><br>
+                <label>item suffix:
+                    <input type="text" name="item_suffix" value="{{ item_suffix or '' }}" />
+                </label><br>
+                <label>result prefix:
+                    <input type="text" name="result_prefix" value="{{ result_prefix or '' }}" />
+                </label><br>
+                <label>result suffix:
+                    <input type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
+                </label><br>
+                <textarea name="column_data" rows="25" cols="30" placeholder="Paste your column here...">{{ column_text or '' }}</textarea><br>
+            
                 <button type="submit">Convert</button>
             </form>
+                  
         </div>
 
         <div>
