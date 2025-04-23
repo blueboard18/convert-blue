@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert.blue</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Convert Column to Comma-Separated List</h1>
+
+    <div class="flex-container">
+        <div>
+            <h2>Input:</h2>
+            <form method="POST">
+                <textarea name="column_data" rows="25" cols="30" placeholder="Paste your column here..."></textarea><br>
+                <button type="submit">Convert</button>
+            </form>
+        </div>
+
+        <div>
+            <h2>Result:</h2>
+            <textarea rows="25" cols="30" readonly>{% if result %}{{ result }}{% endif %}</textarea>
+        </div>
+    </div>
+</body>
+</html>
