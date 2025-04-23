@@ -3,6 +3,9 @@
 <head>
     <title>convert.blue</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon"
+    type="image/x-icon"
+    href="{{ url_for('static', filename='favicon.ico') }}" />
 </head>
 <body>
     <h1>Convert Column to Comma-Separated List</h1>
@@ -26,17 +29,49 @@
                 <label>result suffix:
                     <input type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
                 </label><br>
-                <textarea name="column_data" rows="25" cols="30" placeholder="Paste your column here...">{{ column_text or '' }}</textarea><br>
+                <br>
+                <button type="submit" class="primary"  >Convert</button>
+                <br><br>
+                <textarea name="column_data" rows="25" cols="40" placeholder="Paste your column here...">{{ column_text or '' }}</textarea><br>
             
-                <button type="submit">Convert</button>
             </form>
                   
         </div>
 
         <div>
             <h2>Result:</h2>
-            <textarea rows="25" cols="30" readonly>{% if result %}{{ result }}{% endif %}</textarea>
-        </div>
+            <!-- type="button" so it doesn't submit the form -->
+            <button type="button" class="primary" id="copy-btn">Copy to clipboard</button>
+            <br><br>
+            <!-- add an id so JS can grab it -->
+            <textarea id="result-textarea"
+                      rows="25" cols="40"
+                      readonly
+            >{% if result %}{{ result }}{% endif %}</textarea>
+
+          </div>
     </div>
+    <script>
+        const copyBtn  = document.getElementById('copy-btn');
+        const resultTa = document.getElementById('result-textarea');
+      
+        copyBtn.addEventListener('click', () => {
+          const text = resultTa.value.trim();
+          if (!text) return;              // nothing to copy
+      
+          navigator.clipboard
+            .writeText(text)              // write to clipboard
+            .then(() => {
+              copyBtn.textContent = 'Copied!';
+              // reset button text after 2s
+              setTimeout(() => { copyBtn.textContent = 'Copy to clipboard'; }, 2000);
+            })
+            .catch(err => {
+              console.error('Copy failed:', err);
+              copyBtn.textContent = 'Error';
+            });
+        });
+      </script>
+      
 </body>
 </html>

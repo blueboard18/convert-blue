@@ -12,6 +12,14 @@
     font-style: normal;
   }
 
+  :root {
+    --cerulean:        #00A8E8;
+    --ink:             #003366;
+    --blue:            #173a95;
+    --purple:          #3700BC;
+    --magenta:         #EC4899;
+  }
+
   body {
     font-family: 'Inter', sans-serif;
   }
@@ -28,4 +36,30 @@
   gap: 10px;
   margin-bottom: 10px;
   align-items: center;
+}
+
+button.primary {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Define the pulse animation */
+@keyframes pulse-colors {
+  0% {
+    background-color: var(--blue);
+  }
+
+  100% {
+    background-color: var(--magenta);
+  }
+}
+
+/* Apply it on hover */
+button.primary:hover {
+  cursor: pointer;
+  animation: pulse-colors 2s infinite alternate;
 }
