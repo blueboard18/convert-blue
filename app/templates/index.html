@@ -29,6 +29,14 @@
                 <label>result suffix:
                     <input type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
                 </label><br>
+                <label>
+                    <input
+                      type="checkbox"
+                      name="dedupe"
+                      {% if dedupe %}checked{% endif %}
+                    />
+                    de-dupe?
+                  </label><br>                  
                 <br>
                 <button type="submit" class="primary"  >Convert</button>
                 <br><br>

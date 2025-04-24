@@ -5,6 +5,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
+    # defaults
     result=""
     column_text=""
     delimiter=","
@@ -12,6 +13,7 @@ def index():
     item_suffix=""
     result_prefix=""
     result_suffix=""
+    dedupe = False 
 
     if request.method == 'POST':
         column_text = request.form.get('column_data', '')
@@ -20,7 +22,10 @@ def index():
         item_suffix = request.form.get('item_suffix', '')
         result_prefix = request.form.get('result_prefix', '')
         result_suffix = request.form.get('result_suffix', '')
-        result = convert_column_to_comma_list(column_text, delimiter, item_prefix, item_suffix, result_prefix, result_suffix)
+        dedupe = request.form.get('dedupe') == 'on'
+        result = convert_column_to_comma_list(column_text, delimiter, item_prefix, item_suffix, result_prefix, result_suffix, dedupe=dedupe)
+
+
 
     return render_template(
         'index.html',
@@ -30,6 +35,7 @@ def index():
         item_prefix=item_prefix,
         item_suffix=item_suffix,
         result_prefix=result_prefix,
-        result_suffix=result_suffix
+        result_suffix=result_suffix,
+        dedupe=dedupe
     )
 
