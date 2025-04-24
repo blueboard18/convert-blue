@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, request
-from .converter import convert_column_to_comma_list
+from .converter import (
+    convert_column_to_comma_list,
+    convert_comma_to_column
+)
 
 main = Blueprint('main', __name__)
 
@@ -39,3 +42,23 @@ def index():
         dedupe=dedupe
     )
 
+@main.route('/commalisttocolumn', methods=['GET', 'POST'])
+def commalisttocolumn():
+    result = ""
+    comma_list = ""
+    delimiter = ","
+    dedupe = False
+
+    if request.method == 'POST':
+        comma_list = request.form.get('comma_list', '')
+        delimiter = request.form.get('delimiter', ',')
+        dedupe = request.form.get('dedupe') == 'on'
+        result = convert_comma_to_column(comma_list, delimiter, dedupe=dedupe)
+
+    return render_template(
+        'commalisttocolumn.html',
+        result=result,
+        comma_list=comma_list,
+        delimiter=delimiter,
+        dedupe=dedupe
+    )

@@ -1,0 +1,58 @@
+{# templates/commalisttocolumn.html #}
+{% extends 'base.html' %}
+{% set active = 'commalisttocolumn' %}
+
+{% block content %}
+  <h1>Convert Comma-Separated List to Column</h1>
+  <div class="flex-container">
+    <div>
+      <h2>Input:</h2>
+      <form method="POST">
+        <label>delimiter:
+          <input type="text" name="delimiter" value="{{ delimiter or ',' }}" />
+        </label><br>
+        <label>
+            <input
+              type="checkbox"
+              name="dedupe"
+              {% if dedupe %}checked{% endif %}
+            />
+            de-dupe?
+          </label><br><br>     
+        <button type="submit" class="primary">Convert</button><br><br>
+        <textarea name="comma_list" rows="25" cols="50"
+                  placeholder="Paste your comma-separated list here…">{{ comma_list or '' }}</textarea><br>
+      </form>
+    </div>
+    <div>
+        <h2>Result:</h2>
+        <button type="button" class="primary" id="copy-btn">Copy to clipboard</button>
+        <br><br>
+        <textarea id="result-textarea" rows="25" cols="50" readonly>
+            {{- result }}
+        </textarea>        
+    </div>
+  </div>
+
+  <script>
+    const copyBtn  = document.getElementById('copy-btn');
+    const resultTa = document.getElementById('result-textarea');
+  
+    copyBtn.addEventListener('click', () => {
+      const text = resultTa.value.trim();
+      if (!text) return;              // nothing to copy
+  
+      navigator.clipboard
+        .writeText(text)              // write to clipboard
+        .then(() => {
+          copyBtn.textContent = 'Copied!';
+          // reset button text after 2s
+          setTimeout(() => { copyBtn.textContent = 'Copy to clipboard'; }, 2000);
+        })
+        .catch(err => {
+          console.error('Copy failed:', err);
+          copyBtn.textContent = 'Error';
+        });
+    });
+  </script>
+{% endblock %}

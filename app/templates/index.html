@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>convert.blue</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon"
-    type="image/x-icon"
-    href="{{ url_for('static', filename='favicon.ico') }}" />
-</head>
-<body>
+{# templates/index.html #}
+{% extends 'base.html' %}
+{% set active = 'index' %}
+
+{% block content %}
     <h1>Convert Column to Comma-Separated List</h1>
 
     <div class="flex-container">
@@ -40,7 +35,7 @@
                 <br>
                 <button type="submit" class="primary"  >Convert</button>
                 <br><br>
-                <textarea name="column_data" rows="25" cols="40" placeholder="Paste your column here...">{{ column_text or '' }}</textarea><br>
+                <textarea name="column_data" rows="25" cols="50" placeholder="Paste your column here...">{{ column_text or '' }}</textarea><br>
             
             </form>
                   
@@ -53,7 +48,7 @@
             <br><br>
             <!-- add an id so JS can grab it -->
             <textarea id="result-textarea"
-                      rows="25" cols="40"
+                      rows="25" cols="50"
                       readonly
             >{% if result %}{{ result }}{% endif %}</textarea>
 
@@ -80,6 +75,4 @@
             });
         });
       </script>
-      
-</body>
-</html>
+{% endblock %}

@@ -15,13 +15,15 @@
   :root {
     --cerulean:        #00A8E8;
     --ink:             #003366;
-    --blue:            #173a95;
+    --blue:            #0A45F5;
     --purple:          #3700BC;
     --magenta:         #EC4899;
   }
 
   body {
     font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    padding-left: 1rem; 
   }
   
   .flex-container {
@@ -42,6 +44,7 @@ button.primary {
   background-color: var(--blue);
   color: white;
   border: none;
+  border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: 700;
@@ -62,4 +65,23 @@ button.primary {
 button.primary:hover {
   cursor: pointer;
   animation: pulse-colors 2s infinite alternate;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-top: .5rem;
+}
+.tabs a {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  color: var(--ink);
+  font-size: small;
+  border-radius: 5px;
+}
+.tabs a.active {
+  font-weight: bold;
+  background-color: var(--purple);
+  color: white;
 }
