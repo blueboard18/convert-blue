@@ -1,11 +1,30 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, make_response, url_for
 from .converter import (
     convert_column_to_comma_list,
     convert_comma_to_column,
     convert_change_case
 )
+from datetime import date
 
 main = Blueprint('main', __name__)
+
+@main.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+    pages = []
+    # collect all public routes without parameters
+    for rule in current_app.url_map.iter_rules():
+        if "GET" in rule.methods and not rule.arguments:
+            pages.append(url_for(rule.endpoint, _external=True))
+
+    # render a simple XML
+    sitemap_xml = render_template(
+      'sitemap_template.xml',
+      pages=pages,
+      lastmod=date.today().isoformat()
+    )
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
