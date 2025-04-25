@@ -3,27 +3,43 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">                     <!-- mobile-friendly -->
-        <title>{{ page_title or "convert.blue – Free List Conversion Tool" }}</title>          <!-- dynamic, unique per page -->
-        <meta name="description"
-              content="{{ meta_description or
-                        'Quickly convert between columns and comma-separated lists for data, CSV, code snippets, and more.' }}">
-        <meta name="keywords"
-              content="convert, comma separated list, column, CSV, data tool, list converter">
-        <link rel="canonical" href="{{ request.url }}">                                          <!-- avoid duplicate-content issues -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="index,follow">
       
-        <!-- OpenGraph for social previews (optional but helpful) -->
-        <meta property="og:title" content="{{ page_title or 'convert.blue' }}">
-        <meta property="og:description"
-              content="{{ meta_description or 'Convert comma lists ↔ columns, instantly.' }}">
-        <meta property="og:url" content="{{ request.url }}">
-        <meta property="og:type" content="website">
-        <!-- Add your logo under static/ and point to it below: -->
-        <meta property="og:image" content="{{ url_for('static', filename='images/og-image.png') }}">
+        <title>{{ page_title or "convert.blue – Free List Conversion Tool" }}</title>
+        <meta name="description" content="{{ meta_description }}">
+        <meta name="keywords" 
+        content="convert, CSV, list converter, comma-separated, comma separated values, CSV generator, column converter, column to comma, comma to column, newline to comma, newline to list, delimiter converter, custom delimiter, pipe-separated, semicolon-separated, spreadsheet helper, SQL IN-clause generator, code snippet generator, text converter, change case, uppercase converter, lowercase converter, Title Case converter, capitalize, snake_case converter, kebab-case converter, data formatting, string manipulation, text formatting, data cleaning, remove duplicates, dedupe list, unique list, free online tool, instant conversion, bulk formatting, online utility, convert.blue">
+        
+        <link rel="canonical" href="{{ request.base_url }}">
       
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+        <!-- OpenGraph -->
+        <meta property="og:title"       content="{{ page_title }}">
+        <meta property="og:description" content="{{ meta_description }}">
+        <meta property="og:url"         content="{{ request.base_url }}">
+        <meta property="og:type"        content="website">
+        <meta property="og:image"       content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+      
+        <!-- Twitter Card -->
+        <meta name="twitter:card"        content="summary_large_image">
+        <meta name="twitter:site"        content="@convert_blue">
+        <meta name="twitter:title"       content="{{ page_title }}">
+        <meta name="twitter:description" content="{{ meta_description }}">
+        <meta name="twitter:image"       content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+      
+        {% assets "all_css" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
+        <link rel="icon"        href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload"
+              href="{{ url_for('static', filename='fonts/Inter/static/Inter_18pt-Regular.ttf') }}"
+              as="font" type="font/ttf" crossorigin>
+        <link rel="preload"
+              href="{{ url_for('static', filename='fonts/Inter/static/Inter_18pt-Bold.ttf') }}"
+              as="font" type="font/ttf" crossorigin>                
 
+          <!-- existing WebSite JSON-LD -->
         <script type="application/ld+json">
             {
               "@context": "https://schema.org",
@@ -37,12 +53,39 @@
               }
             }
             </script>
+
+              <!-- SoftwareApplication JSON-LD -->
+        <script type="application/ld+json">
+            {
+            "@context":"https://schema.org",
+            "@type":"SoftwareApplication",
+            "name":"{{ page_title }}",
+            "url":"{{ request.base_url }}",
+            "description":"{{ meta_description }}",
+            "applicationCategory":"Utilities",
+            "operatingSystem":"All",
+            "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+            }
+            </script>
+        
+            <!-- BreadcrumbList JSON-LD -->
+            <script type="application/ld+json">
+            {
+            "@context":"https://schema.org",
+            "@type":"BreadcrumbList",
+            "itemListElement":[
+                { "@type":"ListItem","position":1,"name":"Home","item":"https://convert.blue/" },
+                { "@type":"ListItem","position":2,"name":"Comma-Separated→Column","item":"https://convert.blue/commalisttocolumn" },
+                { "@type":"ListItem","position":3,"name":"Change Case","item":"https://convert.blue/changecase" }
+            ]
+            }
+            </script>
       </head>      
 <body>
   <nav class="tabs">
     <a href="{{ url_for('main.index') }}"
        class="{% if active=='index' %}active{% endif %}">
-      Column → Comma-Seperated List
+      Column → Comma-Separated List
     </a>
     <a href="{{ url_for('main.commalisttocolumn') }}"
        class="{% if active=='commalisttocolumn' %}active{% endif %}">

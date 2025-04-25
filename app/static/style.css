@@ -136,8 +136,8 @@ button.primary:hover {
   flex: .5;               /* fill half remaining space */
 }
 
-/* then “undo” it for checkboxes */
 .form-row input[type="checkbox"] {
   flex: 0 0 auto;  /* no growing or shrinking */
   margin-left: 0;  /* sit flush under the label */
 }
+
