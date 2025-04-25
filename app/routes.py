@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, make_response, url_for
+from flask import Blueprint, render_template, request, make_response, url_for, current_app
 from .converter import (
     convert_column_to_comma_list,
     convert_comma_to_column,
