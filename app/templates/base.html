@@ -1,12 +1,29 @@
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>convert.blue</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">                     <!-- mobile-friendly -->
+        <title>{{ page_title or "convert.blue – Free List Conversion Tool" }}</title>          <!-- dynamic, unique per page -->
+        <meta name="description"
+              content="{{ meta_description or
+                        'Quickly convert between columns and comma-separated lists for data, CSV, code snippets, and more.' }}">
+        <meta name="keywords"
+              content="convert, comma separated list, column, CSV, data tool, list converter">
+        <link rel="canonical" href="{{ request.url }}">                                          <!-- avoid duplicate-content issues -->
+      
+        <!-- OpenGraph for social previews (optional but helpful) -->
+        <meta property="og:title" content="{{ page_title or 'convert.blue' }}">
+        <meta property="og:description"
+              content="{{ meta_description or 'Convert comma lists ↔ columns, instantly.' }}">
+        <meta property="og:url" content="{{ request.url }}">
+        <meta property="og:type" content="website">
+        <!-- Add your logo under static/ and point to it below: -->
+        <meta property="og:image" content="{{ url_for('static', filename='images/og-image.png') }}">
+      
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+      </head>      
 <body>
   <nav class="tabs">
     <a href="{{ url_for('main.index') }}"

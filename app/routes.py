@@ -33,6 +33,8 @@ def index():
 
     return render_template(
         'index.html',
+        page_title="Column → Comma-Separated List",
+        meta_description="Paste your column entries and get a comma-separated string instantly.",
         result=result,
         column_text=column_text,
         delimiter=delimiter,
@@ -58,6 +60,8 @@ def commalisttocolumn():
 
     return render_template(
         'commalisttocolumn.html',
+        page_title="Comma-Separated List → Column",
+        meta_description="Paste your comma-separated string and get column entries instantly.",
         result=result,
         comma_list=comma_list,
         delimiter=delimiter,
@@ -76,7 +80,9 @@ def changecase():
         result = convert_change_case(text, case_option)
 
     return render_template(
-        'changecase.html',
+        'changecase.html',\
+        page_title="Change Case",
+        meta_description="Paste your text and change its case instantly.",
         result=result,
         text=text,
         case_option=case_option
