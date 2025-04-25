@@ -9,29 +9,39 @@
         <div>
             <h2>Input:</h2>
             <form method="POST">            
-                <label>delimiter:
-                    <input type="text" name="delimiter" value="{{ delimiter or ',' }}" />
-                </label><br>
-                <label>item prefix:
-                    <input type="text" name="item_prefix" value="{{ item_prefix or '' }}" />
-                </label><br>
-                <label>item suffix:
-                    <input type="text" name="item_suffix" value="{{ item_suffix or '' }}" />
-                </label><br>
-                <label>result prefix:
-                    <input type="text" name="result_prefix" value="{{ result_prefix or '' }}" />
-                </label><br>
-                <label>result suffix:
-                    <input type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
-                </label><br>
-                <label>
+                <div class="form-row">
+                    <label for="delimiter">delimiter:</label>
+                    <input id="delimiter" type="text" name="delimiter" value="{{ delimiter or ',' }}" />
+                  </div>
+                  
+                  <div class="form-row">
+                    <label for="item_prefix">item prefix:</label>
+                    <input id="item_prefix" type="text" name="item_prefix" value="{{ item_prefix or '' }}" />
+                  </div>
+                  
+                  <div class="form-row">
+                    <label for="item_suffix">item suffix:</label>
+                    <input id="item_suffix" type="text" name="item_suffix" value="{{ item_suffix or '' }}" />
+                  </div>
+                  
+                  <div class="form-row">
+                    <label for="result_prefix">result prefix:</label>
+                    <input id="result_prefix" type="text" name="result_prefix" value="{{ result_prefix or '' }}" />
+                  </div>
+                  
+                  <div class="form-row">
+                    <label for="result_suffix">result suffix:</label>
+                    <input id="result_suffix" type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
+                  </div>
+                  <div class="form-row">
+                    <label for="dedupe">de-dupe?:</label>
                     <input
+                      id="dedupe"
                       type="checkbox"
                       name="dedupe"
                       {% if dedupe %}checked{% endif %}
                     />
-                    de-dupe?
-                  </label><br>                  
+                  </div>   
                 <br>
                 <button type="submit" class="primary"  >Convert</button>
                 <br><br>

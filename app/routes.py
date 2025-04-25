@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request
 from .converter import (
     convert_column_to_comma_list,
-    convert_comma_to_column
+    convert_comma_to_column,
+    convert_change_case
 )
 
 main = Blueprint('main', __name__)
@@ -61,4 +62,22 @@ def commalisttocolumn():
         comma_list=comma_list,
         delimiter=delimiter,
         dedupe=dedupe
+    )
+
+@main.route('/changecase', methods=['GET', 'POST'])
+def changecase():
+    result = ""
+    text = ""
+    case_option = "upper"
+
+    if request.method == 'POST':
+        text = request.form.get('text_input', '')
+        case_option = request.form.get('case_option', 'upper')
+        result = convert_change_case(text, case_option)
+
+    return render_template(
+        'changecase.html',
+        result=result,
+        text=text,
+        case_option=case_option
     )

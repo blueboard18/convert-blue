@@ -72,6 +72,8 @@ button.primary:hover {
   gap: 1rem;
   margin-bottom: 2rem;
   padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid grey;
 }
 .tabs a {
   text-decoration: none;
@@ -84,4 +86,58 @@ button.primary:hover {
   font-weight: bold;
   background-color: var(--purple);
   color: white;
+}
+
+/* Change-Case option grid */
+.changecase-options {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin: 0rem 0;
+}
+
+.changecase-options input[type="radio"] {
+  display: none;
+}
+
+.changecase-options label {
+  padding: 5px 10px;
+  border: 1px solid var(--blue);
+  width: 120px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* style the “checked” cell */
+.changecase-options input[type="radio"]:checked + label {
+  background-color: var(--cerulean);
+  color: white;
+  border-color: var(--blue);
+}
+
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+.form-row label {
+  width: 7em;            /* enough to cover your longest label text */
+  margin-right: 1rem;
+  text-align: left;
+}
+.form-row input,
+.form-row textarea {
+  flex: .5;               /* fill half remaining space */
+}
+
+/* then “undo” it for checkboxes */
+.form-row input[type="checkbox"] {
+  flex: 0 0 auto;  /* no growing or shrinking */
+  margin-left: 0;  /* sit flush under the label */
 }

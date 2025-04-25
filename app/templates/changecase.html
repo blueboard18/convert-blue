@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% set active = 'changecase' %}
+
+{% block content %}
+  <h1>Change Case</h1>
+  <div class="flex-container">
+    <div>
+      <h2>Input:</h2>
+      <form method="POST">
+        <div class="changecase-options">
+            <input type="radio" id="case-upper"      name="case_option" value="upper"
+                   {% if case_option=='upper' %}checked{% endif %}/>
+            <label for="case-upper">UPPERCASE</label>
+          
+            <input type="radio" id="case-lower"      name="case_option" value="lower"
+                   {% if case_option=='lower' %}checked{% endif %}/>
+            <label for="case-lower">lowercase</label>
+          
+            <input type="radio" id="case-title"      name="case_option" value="title"
+                   {% if case_option=='title' %}checked{% endif %}/>
+            <label for="case-title">Title Case</label>
+          
+            <input type="radio" id="case-capitalize" name="case_option" value="capitalize"
+                   {% if case_option=='capitalize' %}checked{% endif %}/>
+            <label for="case-capitalize">Capitalize</label>
+          
+            <input type="radio" id="case-snake"      name="case_option" value="snake"
+                   {% if case_option=='snake' %}checked{% endif %}/>
+            <label for="case-snake">snake_case</label>
+          
+            <input type="radio" id="case-kebab"      name="case_option" value="kebab"
+                   {% if case_option=='kebab' %}checked{% endif %}/>
+            <label for="case-kebab">kebab-case</label>
+          </div>          
+          <br><br>
+          <button type="submit" class="primary">Convert</button>
+          <br><br>
+        <textarea name="text_input" rows="10" cols="50"
+                  placeholder="Paste your text here…">{{ text or '' }}</textarea>
+        <br><br>
+      </form>
+    </div>
+
+    <div>
+      <h2>Result:</h2>
+      <button type="button" class="primary" id="copy-btn">Copy to clipboard</button>
+      <br><br>
+      <textarea id="result-textarea" rows="10" cols="50" readonly>{{ result }}</textarea>
+    </div>
+  </div>
+
+  <script>
+    const copyBtn  = document.getElementById('copy-btn');
+    const resultTa = document.getElementById('result-textarea');
+    copyBtn.addEventListener('click', () => {
+      const text = resultTa.value.trim();
+      if (!text) return;
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => copyBtn.textContent = 'Copy to clipboard', 2000);
+        })
+        .catch(() => copyBtn.textContent = 'Error');
+    });
+  </script>
+{% endblock %}

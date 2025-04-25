@@ -8,21 +8,41 @@
     <div>
       <h2>Input:</h2>
       <form method="POST">
-        <label>delimiter:
-          <input type="text" name="delimiter" value="{{ delimiter or ',' }}" />
-        </label><br>
-        <label>
-            <input
-              type="checkbox"
-              name="dedupe"
-              {% if dedupe %}checked{% endif %}
-            />
-            de-dupe?
-          </label><br><br>     
-        <button type="submit" class="primary">Convert</button><br><br>
-        <textarea name="comma_list" rows="25" cols="50"
-                  placeholder="Paste your comma-separated list here...">{{ comma_list or '' }}</textarea><br>
-      </form>
+        <!-- delimiter field -->
+        <div class="form-row">
+          <label for="delimiter">delimiter:</label>
+          <input
+            id="delimiter"
+            type="text"
+            name="delimiter"
+            value="{{ delimiter or ',' }}"
+          />
+        </div>
+
+        <!-- dedupe checkbox -->
+        <div class="form-row">
+          <label for="dedupe">de-dupe?:</label>
+          <input
+            id="dedupe"
+            type="checkbox"
+            name="dedupe"
+            {% if dedupe %}checked{% endif %}
+          />
+        </div>
+        <br>
+
+        <!-- submit button -->
+        <button type="submit" class="primary">Convert</button>
+        <br><br>
+
+        <!-- comma-list textarea -->
+        <textarea
+          name="comma_list"
+          rows="25"
+          cols="50"
+          placeholder="Paste your comma-separated list here…"
+        >{{ comma_list or '' }}</textarea>
+    </form>
     </div>
     <div>
         <h2>Result:</h2>

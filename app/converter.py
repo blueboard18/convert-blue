@@ -1,3 +1,5 @@
+import re
+
 #converting functions
 
 def convert_column_to_comma_list(text, delimiter=',', item_prefix='', item_suffix='', result_prefix='', result_suffix='', dedupe=False):
@@ -24,5 +26,23 @@ def convert_comma_to_column(text, delimiter=',', result_prefix='', result_suffix
     lines = [item for item in items if item]
     
     result = "\n".join(lines)
+
     # strip any leading/trailing blank lines or spaces:
     return f"{result_prefix}{result.strip()}{result_suffix}"
+
+def convert_change_case(text, case_option):
+    if case_option == 'upper':
+        return text.upper()
+    elif case_option == 'lower':
+        return text.lower()
+    elif case_option == 'title':
+        return text.title()
+    elif case_option == 'capitalize':
+        return text.capitalize()
+    elif case_option in ('snake', 'kebab'):
+        # split on non-word chars, lowercase, then join with '_' or '-'
+        sep = '_' if case_option == 'snake' else '-'
+        words = re.findall(r'\w+', text.lower())
+        return sep.join(words)
+    else:
+        return text 
