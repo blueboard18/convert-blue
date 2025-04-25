@@ -23,6 +23,20 @@
       
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "convert.blue",
+              "url": "https://convert.blue/",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://convert.blue/?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            }
+            </script>
       </head>      
 <body>
   <nav class="tabs">
