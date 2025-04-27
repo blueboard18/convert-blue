@@ -37,6 +37,7 @@ def index():
     result_prefix=""
     result_suffix=""
     dedupe = False 
+    sort_order = ''
 
     if request.method == 'POST':
         column_text = request.form.get('column_data', '')
@@ -46,7 +47,9 @@ def index():
         result_prefix = request.form.get('result_prefix', '')
         result_suffix = request.form.get('result_suffix', '')
         dedupe = request.form.get('dedupe') == 'on'
-        result = convert_column_to_comma_list(column_text, delimiter, item_prefix, item_suffix, result_prefix, result_suffix, dedupe=dedupe)
+        sort_order = request.form.get('sort_order', '')
+        result = convert_column_to_comma_list(
+            column_text, delimiter, item_prefix, item_suffix, result_prefix, result_suffix, dedupe=dedupe, sort_order=sort_order)
 
 
 
@@ -61,7 +64,8 @@ def index():
         item_suffix=item_suffix,
         result_prefix=result_prefix,
         result_suffix=result_suffix,
-        dedupe=dedupe
+        dedupe=dedupe,
+        sort_order=sort_order
     )
 
 @main.route('/commalisttocolumn', methods=['GET', 'POST'])
@@ -70,12 +74,14 @@ def commalisttocolumn():
     comma_list = ""
     delimiter = ","
     dedupe = False
+    sort_order = ''
 
     if request.method == 'POST':
         comma_list = request.form.get('comma_list', '')
         delimiter = request.form.get('delimiter', ',')
         dedupe = request.form.get('dedupe') == 'on'
-        result = convert_comma_to_column(comma_list, delimiter, dedupe=dedupe)
+        sort_order = request.form.get('sort_order', '')
+        result = convert_comma_to_column(comma_list, delimiter, dedupe=dedupe, sort_order=sort_order)
 
     return render_template(
         'commalisttocolumn.html',
@@ -84,7 +90,8 @@ def commalisttocolumn():
         result=result,
         comma_list=comma_list,
         delimiter=delimiter,
-        dedupe=dedupe
+        dedupe=dedupe,
+        sort_order=sort_order
     )
 
 @main.route('/changecase', methods=['GET', 'POST'])

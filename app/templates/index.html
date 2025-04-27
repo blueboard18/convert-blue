@@ -35,6 +35,14 @@
                     <input id="result_suffix" type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
                   </div>
                   <div class="form-row">
+                    <label for="sort_order">sort lines:</label>
+                    <select id="sort_order" name="sort_order">
+                      <option value=""   {% if not sort_order %}selected{% endif %}>none</option>
+                      <option value="asc"  {% if sort_order=='asc' %}selected{% endif %}>A → Z</option>
+                      <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Z → A</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
                     <label for="dedupe">de-dupe?:</label>
                     <input
                       id="dedupe"
