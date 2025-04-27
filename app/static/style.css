@@ -18,6 +18,7 @@
     --blue:            #0A45F5;
     --purple:          #3700BC;
     --magenta:         #EC4899;
+    --lightgrey:       #e6e6e6;
   }
 
   body {
@@ -92,8 +93,9 @@ button.primary:hover {
 .changecase-options {
   display: inline-grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  margin: 0rem 0;
+  gap: 1px;
+  border: 1px solid black; /* outer border */
+  border-radius: 5px; 
 }
 
 .changecase-options input[type="radio"] {
@@ -102,23 +104,29 @@ button.primary:hover {
 
 .changecase-options label {
   padding: 5px 10px;
-  border: 1px solid var(--blue);
   width: 120px;
-  border-radius: 4px;
   text-align: center;
   cursor: pointer;
   user-select: none;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
+  margin: 0;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 /* style the “checked” cell */
 .changecase-options input[type="radio"]:checked + label {
-  background-color: var(--cerulean);
-  color: white;
-  border-color: var(--blue);
+  background-color: var(--lightgrey);
+  color: var(--blue);
+  font-weight: 700;
 }
+
+/* round edge cells */ 
+.changecase-options label:nth-of-type(1) { border-top-left-radius:5px; }
+.changecase-options label:nth-of-type(2) { border-top-right-radius:5px; }
+.changecase-options label:nth-of-type(5) { border-bottom-left-radius:5px; }
+.changecase-options label:nth-of-type(6) { border-bottom-right-radius:5px; }
+
 
 
 .form-row {
