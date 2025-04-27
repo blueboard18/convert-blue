@@ -153,6 +153,6 @@ button.primary:hover {
   text-align: left;
 }
 .logo-container img {
-  max-height: 40px;  /* adjust height as needed */
+  max-height: 35px;  /* adjust height as needed */
   height: auto;
 }
