@@ -1,5 +1,16 @@
 import re
 
+
+# numeric-aware sort key: tuples ensure floats only compare to floats,
+# and strings only to strings
+def numeric_key(val):
+    try:
+        # group 0 = real numbers
+        return (0, float(val))
+    except ValueError:
+        # group 1 = anything else, sorted lexicographically
+        return (1, val)
+
 #converting functions
 
 def convert_column_to_comma_list(
@@ -20,9 +31,9 @@ def convert_column_to_comma_list(
 
    # --- SORTING ---
     if sort_order == 'asc':
-        lines = sorted(lines)
+        lines = sorted(lines, key=numeric_key)
     elif sort_order == 'desc':
-        lines = sorted(lines, reverse=True)
+        lines = sorted(lines, key=numeric_key, reverse=True)
 
     # wrap each line, then join
     processed_items = [f"{item_prefix}{line}{item_suffix}" for line in lines]
@@ -45,9 +56,9 @@ def convert_comma_to_column(
 
        # --- SORTING ---
     if sort_order == 'asc':
-        items = sorted(items)
+        items = sorted(items, key=numeric_key)
     elif sort_order == 'desc':
-        items = sorted(items, reverse=True)
+        items = sorted(items, key=numeric_key, reverse=True)
     
     # drop any empty strings
     lines = [item for item in items if item]
