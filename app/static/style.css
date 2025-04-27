@@ -149,3 +149,10 @@ button.primary:hover {
   margin-left: 0;  /* sit flush under the label */
 }
 
+.logo-container {
+  text-align: left;
+}
+.logo-container img {
+  max-height: 40px;  /* adjust height as needed */
+  height: auto;
+}
