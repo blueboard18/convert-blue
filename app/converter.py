@@ -84,3 +84,6 @@ def convert_change_case(text, case_option):
         return sep.join(words)
     else:
         return text 
+
+def convert_find_replace(text, find_str, replace_str):
+    return text.replace(find_str, replace_str)

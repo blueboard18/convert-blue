@@ -101,8 +101,12 @@
       Comma-Seperated List → Column
     </a>
     <a href="{{ url_for('main.changecase') }}"
-    class="{% if active=='changecase' %}active{% endif %}">
-    Change Case
+      class="{% if active=='changecase' %}active{% endif %}">
+      Change Case
+    </a>
+    <a href="{{ url_for('main.findreplace') }}"
+      class="{% if active=='findreplace' %}active{% endif %}">
+      Find & Replace
     </a>
   </nav>
 

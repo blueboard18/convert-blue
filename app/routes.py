@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, request, make_response, url_for, c
 from .converter import (
     convert_column_to_comma_list,
     convert_comma_to_column,
-    convert_change_case
+    convert_change_case,
+    convert_find_replace
 )
 from datetime import date
 
@@ -112,4 +113,22 @@ def changecase():
         result=result,
         text=text,
         case_option=case_option
+    )
+
+@main.route('/findreplace', methods=['GET', 'POST'])
+def findreplace():
+    text, result, find_str, replace_str = "", "", "",""
+    if request.method == 'POST':
+        find_str    = request.form.get('find_str', '')
+        replace_str = request.form.get('replace_str', '')
+        text        = request.form.get('text_input', '')
+        result      = convert_find_replace(text, find_str, replace_str)
+    return render_template(
+        'findreplace.html',
+        page_title="Find & Replace",
+        meta_description="Quickly search and replace text strings.",
+        result=result,
+        find_str=find_str,
+        replace_str=replace_str,
+        text=text
     )

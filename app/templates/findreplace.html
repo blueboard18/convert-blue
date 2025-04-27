@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% set active = 'findreplace' %}
+{% block content %}
+  <h1>Find & Replace</h1>
+  <p>free tool to search for a substring and replace it throughout your text.</p>
+  <div class="flex-container">
+    <div>
+        <h2>Input:</h2>
+        <form method="POST">
+            <div class="form-row">
+                <label for="find_str">find:</label>
+                <input id="find_str" name="find_str" value="{{ find_str or '' }}" />
+            </div>
+            <div class="form-row">
+                <label for="replace_str">replace:</label>
+                <input id="replace_str" name="replace_str" value="{{ replace_str or '' }}" />
+            </div>
+            <br>
+            <button type="submit" class="primary">Convert</button>
+            <br><br>
+            <!-- comma-list textarea -->
+            <textarea
+            name="text_input"
+            rows="25"
+            cols="50"
+            placeholder="Paste your text here..."
+            >{{ text or '' }}</textarea>
+        </form>
+    </div>
+    <div>
+        <h2>Result:</h2>
+        <button type="button" class="primary" id="copy-btn">Copy to clipboard</button>
+        <br><br>
+        <textarea id="result-textarea" rows="25" cols="50" readonly>
+            {{- result -}}
+        </textarea>        
+    </div>
+
+    <script>
+        const copyBtn  = document.getElementById('copy-btn');
+        const resultTa = document.getElementById('result-textarea');
+      
+        copyBtn.addEventListener('click', () => {
+          const text = resultTa.value.trim();
+          if (!text) return;              // nothing to copy
+      
+          navigator.clipboard
+            .writeText(text)              // write to clipboard
+            .then(() => {
+              copyBtn.textContent = 'Copied!';
+              // reset button text after 2s
+              setTimeout(() => { copyBtn.textContent = 'Copy to clipboard'; }, 2000);
+            })
+            .catch(err => {
+              console.error('Copy failed:', err);
+              copyBtn.textContent = 'Error';
+            });
+        });
+      </script>
+{% endblock %}
