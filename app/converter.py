@@ -11,7 +11,15 @@ def numeric_key(val):
         # group 1 = anything else, sorted lexicographically
         return (1, val)
 
-#converting functions
+# helper to dedupe & sort uniformly
+def process_items(items, dedupe=False, sort_order=None):
+    if dedupe:
+        items = list(dict.fromkeys(items))
+    if sort_order == 'asc':
+        items = sorted(items, key=numeric_key)
+    elif sort_order == 'desc':
+        items = sorted(items, key=numeric_key, reverse=True)
+    return items
 
 def convert_column_to_comma_list(
     text, 
@@ -24,16 +32,7 @@ def convert_column_to_comma_list(
     sort_order=None):
     # split and strip; drop empty lines
     lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
-
-    if dedupe:
-        # use dict.fromkeys to remove duplicates but keep first-seen order
-        lines = list(dict.fromkeys(lines))
-
-   # --- SORTING ---
-    if sort_order == 'asc':
-        lines = sorted(lines, key=numeric_key)
-    elif sort_order == 'desc':
-        lines = sorted(lines, key=numeric_key, reverse=True)
+    lines = process_items(lines, dedupe=dedupe, sort_order=sort_order)
 
     # wrap each line, then join
     processed_items = [f"{item_prefix}{line}{item_suffix}" for line in lines]
@@ -47,26 +46,21 @@ def convert_comma_to_column(
     dedupe=False,
     sort_order=None):
     
-    # strip off leading/trailing whitespace, then split
-    items = [item.strip() for item in text.strip().split(delimiter)]
+    # split on delimiter, strip whitespace, drop empty entries
+    items = [
+        item.strip()
+        for item in text.strip().split(delimiter)
+        if item.strip()
+    ]
 
-    if dedupe:
-        # use dict.fromkeys to remove duplicates but keep first-seen order
-        items = list(dict.fromkeys(items))
+    # dedupe & sort using your shared helper
+    items = process_items(items, dedupe=dedupe, sort_order=sort_order)
 
-       # --- SORTING ---
-    if sort_order == 'asc':
-        items = sorted(items, key=numeric_key)
-    elif sort_order == 'desc':
-        items = sorted(items, key=numeric_key, reverse=True)
-    
-    # drop any empty strings
-    lines = [item for item in items if item]
-    
-    result = "\n".join(lines)
+    # join into lines
+    result = "\n".join(items)
 
-    # strip any leading/trailing blank lines or spaces:
-    return f"{result_prefix}{result.strip()}{result_suffix}"
+    # wrap with prefix/suffix and return
+    return f"{result_prefix}{result}{result_suffix}"
 
 def convert_change_case(text, case_option):
     if case_option == 'upper':

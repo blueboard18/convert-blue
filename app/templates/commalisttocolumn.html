@@ -9,7 +9,7 @@
     <div>
       <h2>Input:</h2>
       <form method="POST">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {% include 'includes/_csrf.html' %}
         <!-- delimiter field -->
         <div class="form-row">
           <label for="delimiter">delimiter:</label>
@@ -57,33 +57,11 @@
     </div>
     <div>
         <h2>Result:</h2>
-        <button type="button" class="primary" id="copy-btn">Copy to clipboard</button>
+        <button type="button" class="primary" data-copy-target="#result-textarea">Copy to clipboard</button>
         <br><br>
         <textarea id="result-textarea" rows="25" cols="50" readonly>
             {{- result -}}
         </textarea>        
     </div>
   </div>
-
-  <script>
-    const copyBtn  = document.getElementById('copy-btn');
-    const resultTa = document.getElementById('result-textarea');
-  
-    copyBtn.addEventListener('click', () => {
-      const text = resultTa.value.trim();
-      if (!text) return;              // nothing to copy
-  
-      navigator.clipboard
-        .writeText(text)              // write to clipboard
-        .then(() => {
-          copyBtn.textContent = 'Copied!';
-          // reset button text after 2s
-          setTimeout(() => { copyBtn.textContent = 'Copy to clipboard'; }, 2000);
-        })
-        .catch(err => {
-          console.error('Copy failed:', err);
-          copyBtn.textContent = 'Error';
-        });
-    });
-  </script>
 {% endblock %}

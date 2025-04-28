@@ -8,7 +8,7 @@
     <div>
       <h2>Input:</h2>
       <form method="POST">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {% include 'includes/_csrf.html' %}
         <div class="changecase-options">
             <input type="radio" id="case-upper"      name="case_option" value="upper"
                    {% if case_option=='upper' %}checked{% endif %}/>
@@ -45,24 +45,9 @@
 
     <div>
       <h2>Result:</h2>
-      <button type="button" class="primary" id="copy-btn">Copy to clipboard</button>
+      <button type="button" class="primary" data-copy-target="#result-textarea">Copy to clipboard</button>
       <br><br>
       <textarea id="result-textarea" rows="25" cols="50" readonly>{{ result }}</textarea>
     </div>
   </div>
-
-  <script>
-    const copyBtn  = document.getElementById('copy-btn');
-    const resultTa = document.getElementById('result-textarea');
-    copyBtn.addEventListener('click', () => {
-      const text = resultTa.value.trim();
-      if (!text) return;
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          copyBtn.textContent = 'Copied!';
-          setTimeout(() => copyBtn.textContent = 'Copy to clipboard', 2000);
-        })
-        .catch(() => copyBtn.textContent = 'Error');
-    });
-  </script>
 {% endblock %}
