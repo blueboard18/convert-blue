@@ -9,7 +9,8 @@
     <div class="flex-container">
         <div>
             <h2>Input:</h2>
-            <form method="POST">            
+            <form method="POST">      
+              {{ csrf_token() }}      
                 <div class="form-row">
                     <label for="delimiter">delimiter:</label>
                     <input id="delimiter" type="text" name="delimiter" value="{{ delimiter or ',' }}" />
