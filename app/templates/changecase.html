@@ -8,7 +8,7 @@
     <div>
       <h2>Input:</h2>
       <form method="POST">
-        {{ csrf_token() }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="changecase-options">
             <input type="radio" id="case-upper"      name="case_option" value="upper"
                    {% if case_option=='upper' %}checked{% endif %}/>

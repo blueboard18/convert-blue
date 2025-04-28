@@ -43,17 +43,17 @@ def create_app():
           'max-age=31536000; includeSubDomains; preload'
         return response
     
-        # enforce HTTPS, HSTS, CSP, X-Frame-Options, etc.
-    # allow our inline <script> blocks until you externalize them:
-    Talisman(app,
-        force_https=True,
-        content_security_policy={
-            "default-src": ["'self'"],
-            # add 'unsafe-inline' so your <script>…</script> snippets still run
-            "script-src":  ["'self'", "'unsafe-inline'"],
-            "style-src":   ["'self'"],
-        }
-    )
+
+    # only enforce HTTPS (and HSTS) when running in production
+    if os.environ.get('FLASK_ENV') == 'production':
+        Talisman(app,
+            force_https=True,
+            content_security_policy={
+                "default-src": ["'self'"],
+                "script-src":  ["'self'", "'unsafe-inline'"],
+                "style-src":   ["'self'"],
+            }
+        )
 
         # allow 200 requests per hour per IP
     limiter = Limiter(key_func=get_remote_address, default_limits=["200/hour"])

@@ -9,7 +9,7 @@
     <div>
       <h2>Input:</h2>
       <form method="POST">
-        {{ csrf_token() }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <!-- delimiter field -->
         <div class="form-row">
           <label for="delimiter">delimiter:</label>

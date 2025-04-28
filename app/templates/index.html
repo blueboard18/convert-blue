@@ -10,8 +10,8 @@
         <div>
             <h2>Input:</h2>
             <form method="POST">      
-              {{ csrf_token() }}      
-                <div class="form-row">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <div class="form-row">
                     <label for="delimiter">delimiter:</label>
                     <input id="delimiter" type="text" name="delimiter" value="{{ delimiter or ',' }}" />
                   </div>
