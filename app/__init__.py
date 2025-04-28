@@ -2,21 +2,25 @@ from flask import Flask
 from flask_compress import Compress
 from flask_assets import Environment, Bundle
 from flask_talisman import Talisman
-from flask_wtf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 from config import Config
 import os
+from flask_wtf.csrf import CSRFProtect
+
+csrf = CSRFProtect()
+limiter = Limiter(key_func=get_remote_address, default_limits=["200/hour"])
 
 def create_app():
     app = Flask(__name__)
     sentry_sdk.init(dsn=os.environ.get("SENTRY_DSN"), integrations=[FlaskIntegration()])
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # Set cache control for static files
     app.config.from_object(Config)
-    CSRFProtect(app)
     Compress(app)  # <-- enables Gzip/Brotli on responses
+    csrf.init_app(app)     # ← registers CSRF checks on all POST/PUT/DELETE
+    limiter.init_app(app)
 
     # —— Assets setup ——
     assets = Environment(app)
@@ -54,9 +58,5 @@ def create_app():
                 "style-src":   ["'self'"],
             }
         )
-
-        # allow 200 requests per hour per IP
-    limiter = Limiter(key_func=get_remote_address, default_limits=["200/hour"])
-    limiter.init_app(app)
 
     return app

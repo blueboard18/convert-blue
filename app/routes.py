@@ -6,6 +6,7 @@ from .converter import (
     convert_find_replace
 )
 from datetime import date
+from . import limiter
 
 main = Blueprint('main', __name__)
 
@@ -27,7 +28,12 @@ def sitemap():
     response.headers["Content-Type"] = "application/xml"
     return response
 
+@main.errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500
+
 @main.route('/', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
 def index():
     # defaults
     result=""
@@ -70,6 +76,7 @@ def index():
     )
 
 @main.route('/commalisttocolumn', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
 def commalisttocolumn():
     result = ""
     comma_list = ""
@@ -96,6 +103,7 @@ def commalisttocolumn():
     )
 
 @main.route('/changecase', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
 def changecase():
     result = ""
     text = ""
@@ -116,6 +124,7 @@ def changecase():
     )
 
 @main.route('/findreplace', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
 def findreplace():
     text, result, find_str, replace_str = "", "", "",""
     if request.method == 'POST':
