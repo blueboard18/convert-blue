@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 2rem;">
+    <img
+        src="{{ url_for('static', filename='images/glados.png') }}"
+        alt="GLaDOS"
+        style="
+        width: 400px;
+        height: auto;
+        object-fit: contain;
+        "
+    />
+    <h1>400 - Bad Request</h1>
+    <p>Despite your violent behavior, the only thing you've managed to break so far is my heart.</p>
+</div>
+
+{% endblock %}
+
+

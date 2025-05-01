@@ -7,6 +7,8 @@ from .converter import (
 )
 from datetime import date
 from . import limiter
+from flask_wtf.csrf import CSRFError
+
 
 main = Blueprint('main', __name__)
 
@@ -31,6 +33,18 @@ def sitemap():
 @main.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+
+@main.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@main.errorhandler(400)
+def bad_request(e):
+    return render_template('400.html'), 400
+
+@main.app_errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return render_template('csrf_error.html', reason=e.description), 419
 
 @main.route('/', methods=['GET', 'POST'])
 @limiter.limit("10 per minute")
@@ -141,3 +155,9 @@ def findreplace():
         replace_str=replace_str,
         text=text
     )
+
+#@main.route('/test', methods=['GET', 'POST'])
+#@limiter.limit("10 per minute")
+#def test():
+#    return render_template('400.html')
+    

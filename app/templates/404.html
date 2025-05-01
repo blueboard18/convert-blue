@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 2rem;">
+    <img
+        src="{{ url_for('static', filename='images/glados.png') }}"
+        alt="GLaDOS"
+        style="
+        width: 400px;
+        height: auto;
+        object-fit: contain;
+        "
+    />
+    <h1>404 - Not Found</h1>
+    <p>The cake is a lie.</p>
+</div>
+
+{% endblock %}
+
+

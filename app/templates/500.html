@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 2rem;">
+    <img
+        src="{{ url_for('static', filename='images/glados.png') }}"
+        alt="GLaDOS"
+        style="
+        width: 400px;
+        height: auto;
+        object-fit: contain;
+        "
+    />
+    <h1>500 - Internal Server Error</h1>
+    <p>Well done. Here are the test results: You are a horrible person. I'm serious, that's what it says: A horrible person. We weren't even testing for that.</p>
+</div>
+
+{% endblock %}
+
+
