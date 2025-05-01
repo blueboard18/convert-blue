@@ -30,15 +30,15 @@ def sitemap():
     response.headers["Content-Type"] = "application/xml"
     return response
 
-@main.errorhandler(500)
+@main.app_errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
 
-@main.errorhandler(404)
+@main.app_errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
-@main.errorhandler(400)
+@main.app_errorhandler(400)
 def bad_request(e):
     return render_template('400.html'), 400
 
