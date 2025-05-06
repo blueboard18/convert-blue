@@ -9,6 +9,8 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from config import Config
 import os
 from flask_wtf.csrf import CSRFProtect
+import base64
+
 
 csrf = CSRFProtect()
 limiter = Limiter(key_func=get_remote_address, default_limits=["200/hour"])
@@ -21,6 +23,11 @@ def create_app():
     Compress(app)  # <-- enables Gzip/Brotli on responses
     csrf.init_app(app)     # ← registers CSRF checks on all POST/PUT/DELETE
     limiter.init_app(app)
+
+    # Register Jinja filter for base64 encoding
+    @app.template_filter('b64encode')
+    def b64encode_filter(data):
+        return base64.b64encode(data).decode('utf-8')
 
     # —— Assets setup ——
     assets = Environment(app)

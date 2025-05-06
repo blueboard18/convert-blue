@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% set active = 'dpi' %}
+{% block content %}
+  <h1>Image DPI Converter</h1>
+  <p>upload an image and change its DPI (dots per inch) for printing or screen display</p>
+
+  <div class="flex-container">
+    <div>
+      <h2>Input:</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% include 'includes/_csrf.html' %}
+            <div class="form-row">
+            <label for="image_file">Upload Image:</label>
+            <input type="file" name="image_file" accept="image/*" required />
+            </div>
+            <div class="form-row">
+                <label>New DPI:</label>
+                <div class="dpi-grid">
+                {% for value in [72, 150, 200, 300, 400, 600] %}
+                    <input type="radio" id="dpi-{{ value }}" name="dpi_choice" value="{{ value }}"
+                        {% if dpi_choice|string == value|string %}checked{% endif %}>
+                    <label for="dpi-{{ value }}">{{ value }}</label>
+                {% endfor %}
+            
+                <!-- "other" radio and label -->
+                <input type="radio" id="dpi-other" name="dpi_choice" value="other"
+                        {% if dpi_choice == 'other' %}checked{% endif %}>
+                <label for="dpi-other" class="dpi-other-label">other</label>
+            
+                <!-- input field inside the grid cell -->
+                <div class="dpi-other-wrapper">
+                    <input type="number" name="dpi" placeholder="DPI"
+                        {% if dpi_choice == 'other' %}value="{{ dpi or '' }}"{% else %}disabled{% endif %}
+                        id="dpi-input" />
+                </div>
+                </div>
+            </div>
+            
+            
+            <br>
+            <button type="submit" class="primary">Convert</button>
+        </form>
+        </div>
+        <div>
+        <h2>Result:</h2>
+            {% if original_dpi %}
+            <p>Original DPI: {{ original_dpi }}</p>
+            <p>New DPI: {{ dpi }}</p>
+            {% endif %}
+        
+            {% if result_image %}
+            <br>
+            <button type="button" class="primary" onclick="downloadImage()">Download Updated Image</button>
+            {% endif %}
+        </div>
+    </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const radios = document.querySelectorAll('input[name="dpi_choice"]');
+      const dpiInput = document.getElementById('dpi-input');
+  
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          const isOther = radio.value === 'other';
+          dpiInput.disabled = !isOther;
+          if (!isOther) {
+            dpiInput.value = radio.value;
+          }
+        });
+      });
+    });
+  </script>
+
+{% if result_image %}
+<script>
+  function downloadImage() {
+    const data = "data:{{ result_image.mimetype }};base64,{{ result_image.data|b64encode }}";
+    const filename = "{{ result_image.filename }}";
+
+    const link = document.createElement('a');
+    link.href = data;
+    link.download = filename;
+    link.click();
+  }
+</script>
+{% endif %}
+
+  
+{% endblock %}

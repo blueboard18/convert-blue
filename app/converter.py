@@ -1,5 +1,6 @@
 import re
-
+from PIL import Image
+import io
 
 # numeric-aware sort key: tuples ensure floats only compare to floats,
 # and strings only to strings
@@ -98,3 +99,9 @@ def extract_text_between_chars(text, start_char, end_char, dedupe=False, sort_or
     # apply deduplication and sorting
     extracted = process_items(extracted, dedupe=dedupe, sort_order=sort_order)
     return "\n".join(extracted)
+
+def convert_image_dpi(image, new_dpi):
+    buffer = io.BytesIO()
+    image.save(buffer, format=image.format, dpi=(new_dpi, new_dpi))
+    buffer.seek(0)
+    return buffer, image.format

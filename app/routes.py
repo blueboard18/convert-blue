@@ -4,11 +4,14 @@ from .converter import (
     convert_comma_to_column,
     convert_change_case,
     convert_find_replace,
-    extract_text_between_chars
+    extract_text_between_chars,
+    convert_image_dpi
 )
 from datetime import date
 from . import limiter
 from flask_wtf.csrf import CSRFError
+from PIL import Image
+import os
 
 
 main = Blueprint('main', __name__)
@@ -78,7 +81,7 @@ def index():
     return render_template(
         'index.html',
         page_title="Column → Comma-Separated List",
-        meta_description="Paste your column entries and get a comma-separated string instantly.",
+        meta_description="Convert column data into comma-separated values for CSVs, SQL queries, or code — free, instant, no signup.",
         result=result,
         column_text=column_text,
         delimiter=delimiter,
@@ -109,7 +112,7 @@ def commalisttocolumn():
     return render_template(
         'commalisttocolumn.html',
         page_title="Comma-Separated List → Column",
-        meta_description="Paste your comma-separated string and get column entries instantly.",
+        meta_description="Convert comma-separated strings into clean column lists for spreadsheets, databases, and forms.",
         result=result,
         comma_list=comma_list,
         delimiter=delimiter,
@@ -132,7 +135,7 @@ def changecase():
     return render_template(
         'changecase.html',\
         page_title="Change Case",
-        meta_description="Paste your text and change its case instantly.",
+        meta_description="Change text case online — convert to UPPERCASE, lowercase, Title Case, snake_case, or kebab-case instantly.",
         result=result,
         text=text,
         case_option=case_option
@@ -150,7 +153,7 @@ def findreplace():
     return render_template(
         'findreplace.html',
         page_title="Find & Replace",
-        meta_description="Quickly search and replace text strings.",
+        meta_description="Find and replace text across your input instantly — perfect for bulk edits, formatting, and cleanup.",
         result=result,
         find_str=find_str,
         replace_str=replace_str,
@@ -184,13 +187,68 @@ def extract():
     return render_template(
         'extract.html',
         page_title="Extract Text Between Characters",
-        meta_description="Paste your column and extract anything between two characters on each line.",
+        meta_description="Extract text between any two characters on each line — perfect for grabbing IDs, tags, values, or custom patterns from your data.",
         result=result,
         column_text=column_text,
         start_char=start_char,
         end_char=end_char,
         dedupe=dedupe,
         sort_order=sort_order
+    )
+
+@main.route('/dpi', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def dpi():
+    result_image = None
+    original_dpi = None
+    original_name = ""
+
+    # Define defaults for GET and POST rendering
+    dpi_choice = "72"
+    dpi = "72"
+
+    if request.method == 'POST':
+        uploaded_file = request.files.get('image_file')
+        dpi_choice = request.form.get('dpi_choice', '72')
+        if dpi_choice == 'other':
+            dpi = request.form.get('dpi', '72')
+        else:
+            dpi = dpi_choice
+
+        try:
+            new_dpi = int(dpi)
+        except ValueError:
+            new_dpi = 72  # fallback/default
+
+        if uploaded_file and new_dpi:
+            try:
+                # Open the image only once
+                image = Image.open(uploaded_file)
+                original_dpi = image.info.get('dpi', (72, 72))[0]
+
+                # Use helper function (modified to take an image object)
+                buffer, file_format = convert_image_dpi(image, new_dpi)
+
+                original_name, _ = os.path.splitext(uploaded_file.filename)
+                result_image = {
+                    "data": buffer.read(),
+                    "mimetype": f"image/{file_format.lower()}",
+                    "filename": f"{original_name}_dpi{new_dpi}.{file_format.lower()}"
+                }
+            except Exception as e:
+                print("DPI conversion error:", e)
+
+    if not result_image:
+        return render_template('dpi.html', original_dpi=original_dpi, dpi_choice=dpi_choice, dpi=dpi, error="DPI conversion failed.")
+
+    return render_template(
+        'dpi.html',
+        page_title="Image DPI Converter",
+        meta_description="Change image DPI for print or web. Upload PNG, JPG, or more and set a new resolution — download instantly.",
+        original_dpi=original_dpi,
+        result_image=result_image,
+        dpi_choice=dpi_choice,
+        dpi=dpi
     )
 
 

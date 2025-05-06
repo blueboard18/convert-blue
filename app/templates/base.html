@@ -9,8 +9,8 @@
         <title>{{ page_title or "convert.blue – Free List Conversion Tool" }}</title>
         <meta name="description" content="{{ meta_description }}">
         <meta name="keywords" 
-        content="convert, CSV, list converter, comma-separated, comma separated values, CSV generator, column converter, column to comma, comma to column, newline to comma, newline to list, delimiter converter, custom delimiter, pipe-separated, semicolon-separated, spreadsheet helper, SQL IN-clause generator, code snippet generator, text converter, change case, uppercase converter, lowercase converter, Title Case converter, capitalize, snake_case converter, kebab-case converter, data formatting, string manipulation, text formatting, data cleaning, remove duplicates, dedupe list, unique list, free online tool, instant conversion, bulk formatting, online utility, convert.blue">
-        
+        content="convert, CSV, list converter, comma-separated, comma separated values, CSV generator, column converter, column to comma, comma to column, newline to comma, newline to list, delimiter converter, custom delimiter, pipe-separated, semicolon-separated, spreadsheet helper, SQL IN-clause generator, code snippet generator, text converter, change case, uppercase converter, lowercase converter, Title Case converter, capitalize, snake_case converter, kebab-case converter, data formatting, string manipulation, text formatting, data cleaning, remove duplicates, dedupe list, unique list, free online tool, instant conversion, bulk formatting, online utility, convert.blue, **image DPI converter, DPI changer, print resolution tool, set DPI online, change image resolution, convert image for printing, convert image for screen, JPG DPI adjuster, PNG DPI converter, base64 image download, downloadable output, custom file output, file rename tool, download button generator, file processing online, productivity tool, formatting tool, no signup converter**"
+        >
         <link rel="canonical" href="{{ request.base_url }}">
       
         <!-- OpenGraph -->
@@ -111,6 +111,10 @@
     <a href="{{ url_for('main.extract') }}"
       class="{% if active=='extract' %}active{% endif %}">
       Extract Text
+    </a>
+    <a href="{{ url_for('main.dpi') }}"
+      class="{% if active=='dpi' %}active{% endif %}">
+      DPI Converter
     </a>
   </nav>
 
