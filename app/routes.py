@@ -3,7 +3,8 @@ from .converter import (
     convert_column_to_comma_list,
     convert_comma_to_column,
     convert_change_case,
-    convert_find_replace
+    convert_find_replace,
+    extract_text_between_chars
 )
 from datetime import date
 from . import limiter
@@ -155,6 +156,43 @@ def findreplace():
         replace_str=replace_str,
         text=text
     )
+
+@main.route('/extract', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def extract():
+    result = ""
+    column_text = ""
+    start_char = "["
+    end_char = "]"
+    dedupe = False
+    sort_order = ""
+
+    if request.method == 'POST':
+        column_text = request.form.get('column_data', '')
+        start_char = request.form.get('start_char', '')
+        end_char = request.form.get('end_char', '')
+        dedupe = request.form.get('dedupe') == 'on'
+        sort_order = request.form.get('sort_order', '')
+
+        if start_char and end_char:
+            result = extract_text_between_chars(
+                column_text, start_char, end_char,
+                dedupe=dedupe,
+                sort_order=sort_order
+            )
+
+    return render_template(
+        'extract.html',
+        page_title="Extract Text Between Characters",
+        meta_description="Paste your column and extract anything between two characters on each line.",
+        result=result,
+        column_text=column_text,
+        start_char=start_char,
+        end_char=end_char,
+        dedupe=dedupe,
+        sort_order=sort_order
+    )
+
 
 #@main.route('/test', methods=['GET', 'POST'])
 #@limiter.limit("10 per minute")

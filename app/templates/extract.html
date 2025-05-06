@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% set active = 'extract' %}
+
+{% block content %}
+  <h1>Extract Text Between Characters</h1>
+  <p>free tool to extract only the text found between two characters (like brackets, quotes, or custom markers) from each line in a column</p>
+
+  <div class="flex-container">
+    <div>
+      <h2>Input:</h2>
+      <form method="POST">
+        {% include 'includes/_csrf.html' %}
+
+        <div class="form-row">
+          <label for="start_char">start char:</label>
+          <input id="start_char" name="start_char" type="text" maxlength="1" value="{{ start_char or '' }}" />
+        </div>
+
+        <div class="form-row">
+          <label for="end_char">end char:</label>
+          <input id="end_char" name="end_char" type="text" maxlength="1" value="{{ end_char or '' }}" />
+        </div>
+
+        <div class="form-row">
+          <label for="sort_order">sort lines:</label>
+          <select id="sort_order" name="sort_order">
+            <option value=""   {% if not sort_order %}selected{% endif %}>none</option>
+            <option value="asc"  {% if sort_order=='asc' %}selected{% endif %}>A → Z</option>
+            <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Z → A</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="dedupe">de-dupe?:</label>
+          <input
+            id="dedupe"
+            type="checkbox"
+            name="dedupe"
+            {% if dedupe %}checked{% endif %}
+          />
+        </div>
+
+        <br>
+        <button type="submit" class="primary">Convert</button>
+        <br><br>
+
+        <textarea name="column_data" rows="25" cols="50" placeholder="Paste your column here...">{{ column_text or '' }}</textarea>
+      </form>
+    </div>
+
+    <div>
+      <h2>Result:</h2>
+      <button type="button" class="primary" data-copy-target="#result-textarea">Copy to clipboard</button>
+      <br><br>
+      <textarea id="result-textarea" rows="25" cols="50" readonly>{{ result }}</textarea>
+    </div>
+  </div>
+{% endblock %}

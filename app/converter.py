@@ -81,3 +81,20 @@ def convert_change_case(text, case_option):
 
 def convert_find_replace(text, find_str, replace_str):
     return text.replace(find_str, replace_str)
+
+def extract_text_between_chars(text, start_char, end_char, dedupe=False, sort_order=None):
+
+    # escape user inputs in case they include regex symbols
+    re_start = re.escape(start_char)
+    re_end   = re.escape(end_char)
+    pattern = rf'{re_start}(.*?){re_end}'
+
+    # clean up lines
+    lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
+    
+    # extract from each line
+    extracted = [match.group(1) for line in lines if (match := re.search(pattern, line))]
+
+    # apply deduplication and sorting
+    extracted = process_items(extracted, dedupe=dedupe, sort_order=sort_order)
+    return "\n".join(extracted)
