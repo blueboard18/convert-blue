@@ -123,9 +123,8 @@ def commalisttocolumn():
         sort_order=sort_order,
         breadcrumb_items=[
             {"name": "Home", "url": url_for('main.index', _external=True)},
-            {"name": "Comma-Separated → Column", "url": request.base_url}
+            {"name": "Comma-Separated List → Column", "url": request.base_url}
         ]
-
     )
 
 @main.route('/changecase', methods=['GET', 'POST'])
