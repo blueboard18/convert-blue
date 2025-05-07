@@ -90,8 +90,11 @@ def index():
         result_prefix=result_prefix,
         result_suffix=result_suffix,
         dedupe=dedupe,
-        sort_order=sort_order
-    )
+        sort_order=sort_order,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)}
+        ]
+        )   
 
 @main.route('/commalisttocolumn', methods=['GET', 'POST'])
 @limiter.limit("10 per minute")
@@ -117,7 +120,12 @@ def commalisttocolumn():
         comma_list=comma_list,
         delimiter=delimiter,
         dedupe=dedupe,
-        sort_order=sort_order
+        sort_order=sort_order,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Comma-Separated → Column", "url": request.base_url}
+        ]
+
     )
 
 @main.route('/changecase', methods=['GET', 'POST'])
@@ -138,7 +146,11 @@ def changecase():
         meta_description="Change text case online — convert to UPPERCASE, lowercase, Title Case, snake_case, or kebab-case instantly.",
         result=result,
         text=text,
-        case_option=case_option
+        case_option=case_option,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Change Case", "url": request.base_url}
+        ]
     )
 
 @main.route('/findreplace', methods=['GET', 'POST'])
@@ -157,7 +169,12 @@ def findreplace():
         result=result,
         find_str=find_str,
         replace_str=replace_str,
-        text=text
+        text=text,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Find & Replace", "url": request.base_url}
+        ]
+
     )
 
 @main.route('/extract', methods=['GET', 'POST'])
@@ -193,7 +210,12 @@ def extract():
         start_char=start_char,
         end_char=end_char,
         dedupe=dedupe,
-        sort_order=sort_order
+        sort_order=sort_order,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Extract Text", "url": request.base_url}
+        ]
+
     )
 
 @main.route('/dpi', methods=['GET', 'POST'])
@@ -248,7 +270,11 @@ def dpi():
         original_dpi=original_dpi,
         result_image=result_image,
         dpi_choice=dpi_choice,
-        dpi=dpi
+        dpi=dpi,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Image DPI Converter", "url": request.base_url}
+        ]
     )
 
 
