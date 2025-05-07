@@ -259,9 +259,6 @@ def dpi():
             except Exception as e:
                 print("DPI conversion error:", e)
 
-    if not result_image:
-        return render_template('dpi.html', original_dpi=original_dpi, dpi_choice=dpi_choice, dpi=dpi, error="DPI conversion failed.")
-
     return render_template(
         'dpi.html',
         page_title="Image DPI Converter",
