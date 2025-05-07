@@ -1,95 +1,103 @@
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="index,follow">
-      
-        <title>{{ page_title or "convert.blue – Free List Conversion Tool" }}</title>
-        <meta name="description" content="{{ meta_description }}">
-        <meta name="keywords" 
-        content="convert, CSV, list converter, comma-separated, comma separated values, CSV generator, column converter, column to comma, comma to column, newline to comma, newline to list, delimiter converter, custom delimiter, pipe-separated, semicolon-separated, spreadsheet helper, SQL IN-clause generator, code snippet generator, text converter, change case, uppercase converter, lowercase converter, Title Case converter, capitalize, snake_case converter, kebab-case converter, data formatting, string manipulation, text formatting, data cleaning, remove duplicates, dedupe list, unique list, free online tool, instant conversion, bulk formatting, online utility, convert.blue, **image DPI converter, DPI changer, print resolution tool, set DPI online, change image resolution, convert image for printing, convert image for screen, JPG DPI adjuster, PNG DPI converter, base64 image download, downloadable output, custom file output, file rename tool, download button generator, file processing online, productivity tool, formatting tool, no signup converter**"
-        >
-        <link rel="canonical" href="{{ request.base_url }}">
-      
-        <!-- OpenGraph -->
-        <meta property="og:title"       content="{{ page_title }}">
-        <meta property="og:description" content="{{ meta_description }}">
-        <meta property="og:url"         content="{{ request.base_url }}">
-        <meta property="og:type"        content="website">
-        <meta property="og:image"       content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
-      
-        <!-- Twitter Card -->
-        <meta name="twitter:card"        content="summary_large_image">
-        <meta name="twitter:site"        content="@convert_blue">
-        <meta name="twitter:title"       content="{{ page_title }}">
-        <meta name="twitter:description" content="{{ meta_description }}">
-        <meta name="twitter:image"       content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
-      
-        {% assets "all_css" %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}">
-        {% endassets %}
-        <link rel="icon"        href="{{ url_for('static', filename='favicon.ico') }}">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="preload"
-              href="{{ url_for('static', filename='fonts/Inter/static/Inter_18pt-Regular.ttf') }}"
-              as="font" type="font/ttf" crossorigin>
-        <link rel="preload"
-              href="{{ url_for('static', filename='fonts/Inter/static/Inter_18pt-Bold.ttf') }}"
-              as="font" type="font/ttf" crossorigin>                
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="robots" content="index,follow">
+    
+      <title>{{ page_title or "convert.blue – Free List Conversion Tool" }}</title>
+      <meta name="description" content="{{ meta_description }}">
+      <meta name="keywords" 
+      content="convert, CSV, list converter, comma-separated, comma separated values, CSV generator, column converter, column to comma, comma to column, newline to comma, newline to list, delimiter converter, custom delimiter, pipe-separated, semicolon-separated, spreadsheet helper, SQL IN-clause generator, code snippet generator, text converter, change case, uppercase converter, lowercase converter, Title Case converter, capitalize, snake_case converter, kebab-case converter, data formatting, string manipulation, text formatting, data cleaning, remove duplicates, dedupe list, unique list, free online tool, instant conversion, bulk formatting, online utility, convert.blue, **image DPI converter, DPI changer, print resolution tool, set DPI online, change image resolution, convert image for printing, convert image for screen, JPG DPI adjuster, PNG DPI converter, base64 image download, downloadable output, custom file output, file rename tool, download button generator, file processing online, productivity tool, formatting tool, no signup converter**"
+      >
+      <link rel="canonical" href="{{ request.base_url }}">
+    
+      <!-- OpenGraph -->
+      <meta property="og:title"       content="{{ page_title }}">
+      <meta property="og:description" content="{{ meta_description }}">
+      <meta property="og:url"         content="{{ request.base_url }}">
+      <meta property="og:type"        content="website">
+      <meta property="og:image"       content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    
+      <!-- Twitter Card -->
+      <meta name="twitter:card"        content="summary_large_image">
+      <meta name="twitter:site"        content="@convert_blue">
+      <meta name="twitter:title"       content="{{ page_title }}">
+      <meta name="twitter:description" content="{{ meta_description }}">
+      <meta name="twitter:image"       content="{{ url_for('static', filename='images/og-image.png', _external=True) }}">
+    
+      {% assets "all_css" %}
+      <link rel="stylesheet" href="{{ ASSET_URL }}">
+      {% endassets %}
+      <link rel="icon"        href="{{ url_for('static', filename='favicon.ico') }}">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="preload"
+            href="{{ url_for('static', filename='fonts/Inter/static/Inter_18pt-Regular.ttf') }}"
+            as="font" type="font/ttf" crossorigin>
+      <link rel="preload"
+            href="{{ url_for('static', filename='fonts/Inter/static/Inter_18pt-Bold.ttf') }}"
+            as="font" type="font/ttf" crossorigin>                
 
-          <!-- existing WebSite JSON-LD -->
+        <!-- existing WebSite JSON-LD -->
+      <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "convert.blue",
+            "url": "https://convert.blue/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://convert.blue/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+          </script>
+
+      <!-- SoftwareApplication JSON-LD -->
+      <script type="application/ld+json">
+        {
+        "@context":"https://schema.org",
+        "@type":"SoftwareApplication",
+        "name":"{{ page_title }}",
+        "url":"{{ request.base_url }}",
+        "description":"{{ meta_description }}",
+        "applicationCategory":"Utilities",
+        "operatingSystem":"All",
+        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+        }
+      </script>
+      
+      <!-- BreadcrumbList JSON-LD -->
+      {% if breadcrumb_items %}
         <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {% for item in breadcrumb_items %}
             {
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "convert.blue",
-              "url": "https://convert.blue/",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://convert.blue/?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              }
-            }
-            </script>
+              "@type": "ListItem",
+              "position": {{ loop.index }},
+              "name": "{{ item.name }}",
+              "item": "{{ item.url }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+          ]
+        }
+        </script>
+      {% endif %}
+          
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PGFHEMSPGY"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-              <!-- SoftwareApplication JSON-LD -->
-        <script type="application/ld+json">
-            {
-            "@context":"https://schema.org",
-            "@type":"SoftwareApplication",
-            "name":"{{ page_title }}",
-            "url":"{{ request.base_url }}",
-            "description":"{{ meta_description }}",
-            "applicationCategory":"Utilities",
-            "operatingSystem":"All",
-            "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
-            }
-            </script>
-        
-            <!-- BreadcrumbList JSON-LD -->
-            <script type="application/ld+json">
-            {
-            "@context":"https://schema.org",
-            "@type":"BreadcrumbList",
-            "itemListElement":[
-                { "@type":"ListItem","position":1,"name":"Home","item":"https://convert.blue/" },
-                { "@type":"ListItem","position":2,"name":"Comma-Separated→Column","item":"https://convert.blue/commalisttocolumn" },
-                { "@type":"ListItem","position":3,"name":"Change Case","item":"https://convert.blue/changecase" }
-            ]
-            }
-            </script>
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-PGFHEMSPGY"></script>
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-PGFHEMSPGY');
-            </script>
-      </head>      
+        gtag('config', 'G-PGFHEMSPGY');
+      </script>
+    </head>      
 <body>
     <!-- Logo (above the nav bar) -->
   <div class="logo-container">
