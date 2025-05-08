@@ -21,13 +21,21 @@
     --lightgrey:       #e6e6e6;
   }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    color: var(--ink);
-    padding: .4rem; 
-  }
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+  padding: .4rem; 
+  padding-top: 0; 
+  font-size: 1rem;
+
+}
   
-  .flex-container {
+textarea {
+	font-family: 'Inter', sans-serif;  /* or whatever font you want */;
+  color: var(--ink);
+}
+
+.flex-container {
     display: flex;
     align-items: flex-start; /* aligns top edges */
     gap: 20px; /* space between form and result */
@@ -131,22 +139,24 @@ button.primary:hover {
 
 .form-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 0.2rem;
 }
 .form-row label {
-  width: 7em;            /* enough to cover your longest label text */
+  width: 6.5em;            /* enough to cover your longest label text */
   margin-right: 1rem;
   text-align: left;
 }
 .form-row input,
 .form-row textarea {
-  flex: .5;               /* fill half remaining space */
+  width: 100px;
+  align-self: flex-start;
 }
 
 .form-row input[type="checkbox"] {
   flex: 0 0 auto;  /* no growing or shrinking */
   margin-left: 0;  /* sit flush under the label */
+  align-self: flex-start;
 }
 
 .logo-container {
@@ -212,3 +222,56 @@ button.primary:hover {
 .dpi-grid input[type="radio"]:checked + label.dpi-other-label + .dpi-other-wrapper {
   background-color: var(--lightgrey);
 }
+
+/* ————————————————————
+   Card layout for index.html
+   ———————————————————— */
+   .card-container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-template-areas:
+      "options options"
+      "input  result";
+    align-items: start;
+    gap: .5rem;
+  }
+  
+  .card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 1rem;
+  }
+  
+  .card-options { grid-area: options; width: auto; padding-top: .6rem; padding-bottom: .6rem;}
+  .card-input   { grid-area: input; width: fit-content;}
+  .card-result  { grid-area: result; width: fit-content;}
+  
+  @media (max-width: 768px) {
+    .card-container {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "options"
+        "input"
+        "result";
+    }
+  }
+
+  .options-grid-layout {
+    display: grid;
+    grid-template-columns: 90px 250px 200px;
+    gap: 1rem 2rem;
+    align-items: start;
+    align-items: left;
+    -ms-grid-row-align: left;
+    -ms-grid-column-align: left;
+  }
+  
+  .options-label {
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    -ms-grid-row-align: center;
+    -ms-grid-column-align: center;
+    padding-top: 0.25rem;
+  }
