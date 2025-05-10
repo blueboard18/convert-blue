@@ -24,7 +24,7 @@
 body {
   font-family: 'Inter', sans-serif;
   color: var(--ink);
-  padding: .4rem; 
+  padding: 0; 
   padding-top: 0; 
   font-size: 1rem;
 
@@ -226,6 +226,12 @@ button.primary:hover {
 /* ————————————————————
    Card layout for index.html
    ———————————————————— */
+   .page-title {
+    width: auto;
+    text-align: left;       /* or center if you prefer */
+    margin-bottom: 1rem;
+  }
+   
    .card-container {
     display: grid;
     grid-template-columns: max-content max-content;
@@ -243,35 +249,113 @@ button.primary:hover {
     padding: 1rem;
   }
   
-  .card-options { grid-area: options; width: auto; padding-top: .6rem; padding-bottom: .6rem;}
-  .card-input   { grid-area: input; width: fit-content;}
-  .card-result  { grid-area: result; width: fit-content;}
+  .card-options { grid-area: options; width: auto; padding: .75rem;}
+  .card-input   { grid-area: input; width: fit-content; padding: .75rem;}
+  .card-result  { grid-area: result; width: fit-content; padding: .75rem;}
   
-  @media (max-width: 768px) {
+  @media (max-width: 680px) {
     .card-container {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
       grid-template-areas:
         "options"
         "input"
         "result";
+    }
+    .card-input,
+    .card-result {
+      width: auto !important; 
+      max-width: 100%; 
+    }
+    
+    /* Control the visible space with textarea height instead */
+    .card-input textarea,
+    .card-result textarea {
+      min-height: 10rem !important;
+      max-height: 10rem !important;
     }
   }
 
   .options-grid-layout {
     display: grid;
     grid-template-columns: 90px 250px 200px;
-    gap: 1rem 2rem;
+    gap: 1rem 1rem;
     align-items: start;
     align-items: left;
     -ms-grid-row-align: left;
     -ms-grid-column-align: left;
   }
-  
-  .options-label {
-    grid-row: 1;
+
+  .card-input {
+    grid-area: input;
+    width: fit-content;
     display: flex;
-    align-items: center;
-    -ms-grid-row-align: center;
-    -ms-grid-column-align: center;
-    padding-top: 0.25rem;
+    flex-direction: column;
+    gap: 1rem;
   }
+
+  .card-result {
+    grid-area: result;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .title-and-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title-and-button h3 {
+    margin: 0;                 /* remove default margins */             /* just in case */
+  }
+
+  /* hamburger menu styles */
+  .local-nav-anchor {
+    position: relative;
+    height: 0;
+    width: 100%;
+  }
+  
+  .hamburger-container {
+    position: absolute;
+    top: -2.5rem;  
+    right: 0;
+    z-index: 1000;
+  }
+  
+  #hamburger-button {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  
+  #hamburger-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 2.5rem;
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--lightgrey);
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-width: 180px;
+  }
+  
+  #hamburger-nav a {
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.9rem;
+  }
+  
+  #hamburger-nav a:hover {
+    background-color: var(--lightgrey);
+  }
+  
+  

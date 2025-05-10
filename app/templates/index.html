@@ -3,7 +3,7 @@
 {% set active = 'index' %}
 
 {% block content %}
-<h1>convert column to comma-separated list</h1>
+<h1 class="page-title">convert column to comma separated list</h1>
 	<form method="POST">
   {% include 'includes/_csrf.html' %}
 		<div class="card-container">
@@ -12,11 +12,11 @@
       <div class="card card-options">
         <div class="options-grid-layout">
           <!-- Left "Options" label -->
-          <div class="xxx">
+          <div>
             <h3>settings</h3>
           </div>
           <!-- Right: form inputs -->
-          <div class="xxx">
+          <div>
             <div class="form-row">
               <label for="delimiter">delimiter:</label>
               <input id="delimiter" type="text" name="delimiter" value="{{ delimiter or ',' }}" />
@@ -38,7 +38,7 @@
               <input id="result_suffix" type="text" name="result_suffix" value="{{ result_suffix or '' }}" />
             </div>
           </div>
-          <div class="xxx">
+          <div>
             <div class="form-row">
               <label for="sort_order">sort lines:</label>
               <select id="sort_order" name="sort_order">
@@ -57,29 +57,30 @@
       
 			<!-- INPUT CARD -->
 			<div class="card card-input">
-				<button type="submit" class="primary">convert</button>
-				<br><br>
+				<div class="title-and-button">
+          <h3>input</h3>
+          <button type="submit" class="primary">convert</button>
+        </div>
 				<textarea
 					name="column_data"
-					rows="20" cols="50"
+					rows="20" cols="40"
 					placeholder="paste your column data here..."
 				>{{ column_text or '' }}</textarea>
 			</div>
 
 			<!-- RESULT CARD -->
 			<div class="card card-result">
-				<button
-					type="button"
-					class="primary"
-					data-copy-target="#result-textarea"
-				>copy to clipboard</button>
-				<br><br>
+        <div class="title-and-button">
+          <h3>result</h3>
+  				<button type="button" class="primary" data-copy-target="#result-textarea">copy to clipboard</button>
+        </div>
 				<textarea
 					id="result-textarea"
-					rows="20" cols="50"
+					rows="20" cols="40"
 					readonly
 				>{% if result %}{{ result }}{% endif %}</textarea>
 			</div>
+      
 
 		</div>
 	</form>

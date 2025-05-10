@@ -100,8 +100,22 @@
   </head>      
 <body>
   <main>
+    <div class="local-nav-anchor">
+      <div class="hamburger-container">
+        <button id="hamburger-button" aria-label="Menu">&#9776;</button>
+        <nav id="hamburger-nav">
+          <a href="{{ url_for('main.index') }}">Column → Comma</a>
+          <a href="{{ url_for('main.commalisttocolumn') }}">Comma → Column</a>
+          <a href="{{ url_for('main.changecase') }}">Change Case</a>
+          <a href="{{ url_for('main.findreplace') }}">Find & Replace</a>
+          <a href="{{ url_for('main.extract') }}">Extract</a>
+          <a href="{{ url_for('main.dpi') }}">DPI</a>
+        </nav>
+      </div>
+    </div>
     {% block content %}{% endblock %}
   </main>
   <script src="{{ url_for('static', filename='js/copy.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
 </body>
 </html>
