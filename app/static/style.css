@@ -156,6 +156,7 @@ button.primary:hover {
 .form-row input[type="checkbox"] {
   flex: 0 0 auto;  /* no growing or shrinking */
   margin-left: 0;  /* sit flush under the label */
+  margin-top: 0;
   align-self: flex-start;
 }
 
@@ -222,6 +223,8 @@ button.primary:hover {
 .dpi-grid input[type="radio"]:checked + label.dpi-other-label + .dpi-other-wrapper {
   background-color: var(--lightgrey);
 }
+
+
 
 /* ————————————————————
    Card layout for index.html
@@ -311,51 +314,66 @@ button.primary:hover {
     margin: 0;                 /* remove default margins */             /* just in case */
   }
 
-  /* hamburger menu styles */
-  .local-nav-anchor {
-    position: relative;
-    height: 0;
-    width: 100%;
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    max-width: 680px; /* same as .card-container */
+    margin: 0;    /* centers it just like .card-container */
+    padding: 0;   /* match .page-container padding if needed */
+  }
+
+  .title-area {
+    flex: 1;
   }
   
   .hamburger-container {
-    position: absolute;
-    top: -2.5rem;  
-    right: 0;
-    z-index: 1000;
+    position: relative;
+    padding-right: .5rem; /* space for the button */
+  }
+
+  .page-container {
+    max-width: 680px; /* or match .card-container width */
+    margin: 0 auto;   /* centers the container */
+    padding: 0;  /* optional side padding for small screens */
   }
   
   #hamburger-button {
-    font-size: 28px;
+    font-size: 38px;
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--ink);
+    color: var(--blue);
+    padding: 0;  /* remove default button padding */
+    margin: 0;
   }
   
   #hamburger-nav {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 2.5rem;
+    top: 105%;         /* directly below button */
     right: 0;
     background-color: white;
     border: 1px solid var(--lightgrey);
-    border-radius: 8px;
-    padding: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    min-width: 180px;
+    border-radius: 5px;
+    padding: 0.25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    min-width: 160px;
+    z-index: 1000;
   }
   
   #hamburger-nav a {
-    padding: 0.5rem;
+    padding: .15rem 0;
+    text-indent: 10%;
     text-decoration: none;
     color: var(--ink);
     font-size: 0.9rem;
+    border-radius: 4px;
   }
   
   #hamburger-nav a:hover {
     background-color: var(--lightgrey);
   }
-  
   

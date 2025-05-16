@@ -99,8 +99,11 @@
       </script>
   </head>      
 <body>
-  <main>
-    <div class="local-nav-anchor">
+  <main class="page-container">
+    <div class="page-header">
+      <div class="title-area">
+        <h1 class="page-title">{{ page_title or "convert.blue" }}</h1>
+      </div>
       <div class="hamburger-container">
         <button id="hamburger-button" aria-label="Menu">&#9776;</button>
         <nav id="hamburger-nav">
@@ -112,7 +115,7 @@
           <a href="{{ url_for('main.dpi') }}">DPI</a>
         </nav>
       </div>
-    </div>
+    </div>    
     {% block content %}{% endblock %}
   </main>
   <script src="{{ url_for('static', filename='js/copy.js') }}"></script>
