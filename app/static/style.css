@@ -172,25 +172,22 @@ button.primary:hover {
 
 .form-row {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 0.2rem;
+  align-items: center;
   font-size: small;
+  margin-bottom: 0.15rem; /* space between rows */
 }
 .form-row label {
-  width: 6.5em;            /* enough to cover your longest label text */
+  width: 6.35em;            /* enough to cover your longest label text */
   margin-right: 0rem;
-  text-align: left;
 }
 .form-row input,
 .form-row textarea {
   width: 40px;
-  align-self: flex-start;
 }
 
 .form-row input[type="checkbox"] {
   margin-left: 0;
   margin-right: auto;
-  align-self: flex-start;
   transform: translateX(-.82rem); /* optional: fine-tune vertical alignment */
 }
 
