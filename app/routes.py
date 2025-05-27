@@ -80,7 +80,7 @@ def index():
 
     return render_template(
         'index.html',
-        page_title="Column → Comma-Separated List",
+        page_title="convert column to comma-separated list",
         meta_description="Convert column data into comma-separated values for CSVs, SQL queries, or code — free, instant, no signup.",
         result=result,
         column_text=column_text,

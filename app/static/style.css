@@ -35,6 +35,27 @@ textarea {
   color: var(--ink);
 }
 
+/* Define the pulse animation for buttons */
+@keyframes pulse-colors {
+  0% {
+    background-color: var(--blue);
+  }
+
+  100% {
+    background-color: var(--magenta);
+  }
+}
+
+/* Define the gradient animation for tabs */
+@keyframes gradient-slide {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
 .flex-container {
     display: flex;
     align-items: flex-start; /* aligns top edges */
@@ -59,16 +80,7 @@ button.primary {
   font-weight: 700;
 }
 
-/* Define the pulse animation */
-@keyframes pulse-colors {
-  0% {
-    background-color: var(--blue);
-  }
 
-  100% {
-    background-color: var(--magenta);
-  }
-}
 
 /* Apply it on hover */
 button.primary:hover {
@@ -78,11 +90,12 @@ button.primary:hover {
 
 .tabs {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  gap: 0rem;
+  margin-bottom: 1rem;
+  padding-bottom: .25rem;
   border-bottom: 1px solid grey;
+  position: relative;
+  justify-content: center;
 }
 .tabs a {
   text-decoration: none;
@@ -90,11 +103,31 @@ button.primary:hover {
   color: var(--ink);
   font-size: small;
   border-radius: 5px;
+  position: relative;
 }
 .tabs a.active {
   font-weight: bold;
-  background-color: var(--purple);
-  color: white;
+}
+
+.tabs a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.45rem;
+  left: 0;
+  right: 0;
+  height: 5px;
+
+  background-image: linear-gradient(
+    to right,
+    var(--blue),
+    var(--cerulean),
+    var(--purple),
+    var(--magenta),
+    var(--blue) /* repeat first color for smoother loop */
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  animation: gradient-slide 4s linear infinite alternate;
 }
 
 /* Change-Case option grid */
@@ -141,23 +174,24 @@ button.primary:hover {
   display: flex;
   align-items: flex-start;
   margin-bottom: 0.2rem;
+  font-size: small;
 }
 .form-row label {
   width: 6.5em;            /* enough to cover your longest label text */
-  margin-right: 1rem;
+  margin-right: 0rem;
   text-align: left;
 }
 .form-row input,
 .form-row textarea {
-  width: 100px;
+  width: 40px;
   align-self: flex-start;
 }
 
 .form-row input[type="checkbox"] {
-  flex: 0 0 auto;  /* no growing or shrinking */
-  margin-left: 0;  /* sit flush under the label */
-  margin-top: 0;
+  margin-left: 0;
+  margin-right: auto;
   align-self: flex-start;
+  transform: translateX(-.82rem); /* optional: fine-tune vertical alignment */
 }
 
 .logo-container {
@@ -239,10 +273,12 @@ button.primary:hover {
     display: grid;
     grid-template-columns: max-content max-content;
     grid-template-areas:
+      "title title"
       "options options"
       "input  result";
     align-items: start;
-    gap: .5rem;
+    justify-content: center;
+    gap: .5rem;  
   }
   
   .card {
@@ -252,7 +288,8 @@ button.primary:hover {
     padding: 1rem;
   }
   
-  .card-options { grid-area: options; width: auto; padding: .75rem;}
+  .card-title   { grid-area: title; width: auto;}
+  .card-options { grid-area: options; width: auto; padding: .75rem; margin-top: 0;}
   .card-input   { grid-area: input; width: fit-content; padding: .75rem;}
   .card-result  { grid-area: result; width: fit-content; padding: .75rem;}
   
@@ -260,6 +297,7 @@ button.primary:hover {
     .card-container {
       grid-template-columns: 1fr !important;
       grid-template-areas:
+        "title"
         "options"
         "input"
         "result";
@@ -280,8 +318,8 @@ button.primary:hover {
 
   .options-grid-layout {
     display: grid;
-    grid-template-columns: 90px 250px 200px;
-    gap: 1rem 1rem;
+    grid-template-columns: 125px 160px 160px 160px;
+    gap: .5rem;
     align-items: start;
     align-items: left;
     -ms-grid-row-align: left;
@@ -302,6 +340,20 @@ button.primary:hover {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+  
+  .card-title {
+    grid-area: title;
+    text-align: center; /* center the title text */
+    text-align: top; /* align text to the top */
+    padding: 0; /* remove default padding */
+    margin: 0; /* remove default margin */
+    border: none;
+  }
+  .card-title h2 {
+    margin-top: 0;
+    margin-bottom: 0.25rem; /* or 0 if you want it flush */
+    line-height: 1;        /* tighten line height */
   }
   
   .title-and-button {

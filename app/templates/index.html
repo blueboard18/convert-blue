@@ -7,6 +7,11 @@
   {% include 'includes/_csrf.html' %}
 		<div class="card-container">
 
+			<!-- Title CARD -->
+      <div class="card card-title">
+        <h2>{{ page_title }}</h2>
+      </div>
+
 			<!-- OPTIONS CARD -->
       <div class="card card-options">
         <div class="options-grid-layout">
@@ -28,6 +33,8 @@
               <label for="item_suffix">item suffix:</label>
               <input id="item_suffix" type="text" name="item_suffix" value="{{ item_suffix or '' }}" />
             </div>
+          </div>
+            <div>
             <div class="form-row">
               <label for="result_prefix">result prefix:</label>
               <input id="result_prefix" type="text" name="result_prefix" value="{{ result_prefix or '' }}" />
