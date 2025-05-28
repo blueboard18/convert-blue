@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, make_response, url_for, current_app
+from flask import Blueprint, render_template, request, make_response, url_for, current_app, abort
 from .converter import (
     convert_column_to_comma_list,
     convert_comma_to_column,
@@ -12,7 +12,6 @@ from . import limiter
 from flask_wtf.csrf import CSRFError
 from PIL import Image
 import os
-
 
 main = Blueprint('main', __name__)
 
@@ -33,6 +32,20 @@ def sitemap():
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
     return response
+
+@main.before_app_request
+def block_malicious_bots():
+    # Block obvious bad user agents
+    bad_agents = ['zgrab', 'curl', 'wget', 'httpclient', 'python-requests', 'libwww', 'go-http-client']
+    user_agent = request.headers.get('User-Agent', '').lower()
+
+    if any(bad in user_agent for bad in bad_agents):
+        abort(403)
+
+    # Block suspicious requests to WordPress or other non-existent paths
+    suspicious_paths = ['/wp-', '/xmlrpc', '/.env', '/config', '/admin']
+    if any(path in request.path for path in suspicious_paths):
+        abort(403)
 
 @main.route('/robots.txt')
 def robots_txt():
