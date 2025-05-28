@@ -33,6 +33,7 @@ body {
 textarea {
 	font-family: 'Inter', sans-serif;  /* or whatever font you want */;
   color: var(--ink);
+  resize: vertical;
 }
 
 /* Define the pulse animation for buttons */
@@ -133,10 +134,8 @@ button.primary:hover {
 /* Change-Case option grid */
 .changecase-options {
   display: inline-grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  border: 1px solid black; /* outer border */
-  border-radius: 5px; 
 }
 
 .changecase-options input[type="radio"] {
@@ -149,8 +148,7 @@ button.primary:hover {
   text-align: center;
   cursor: pointer;
   user-select: none;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  font-size: 90%;
   margin: 0;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
@@ -162,13 +160,13 @@ button.primary:hover {
   font-weight: 700;
 }
 
-/* round edge cells */ 
+
+/* round edge cells
 .changecase-options label:nth-of-type(1) { border-top-left-radius:5px; }
 .changecase-options label:nth-of-type(2) { border-top-right-radius:5px; }
 .changecase-options label:nth-of-type(5) { border-bottom-left-radius:5px; }
 .changecase-options label:nth-of-type(6) { border-bottom-right-radius:5px; }
-
-
+*/
 
 .form-row {
   display: flex;
@@ -188,7 +186,19 @@ button.primary:hover {
 .form-row input[type="checkbox"] {
   margin-left: 0;
   margin-right: auto;
-  transform: translateX(-.82rem); /* optional: fine-tune vertical alignment */
+  transform: translateX(-.85rem); /* optional: fine-tune vertical alignment */
+}
+
+.form-row input[name="find_str"],
+.form-row input[name="replace_str"]{
+  width: 155px;
+  min-width: 0;
+  grid-column: span 3;  /* Try to span multiple columns if possible */
+}
+
+.form-row label[for="start_char"],
+.form-row label[for="end_char"]{
+  width: 99px ;
 }
 
 .logo-container {
@@ -287,8 +297,8 @@ button.primary:hover {
   
   .card-title   { grid-area: title; width: auto;}
   .card-options { grid-area: options; width: auto; padding: .75rem; margin-top: 0;}
-  .card-input   { grid-area: input; width: fit-content; padding: .75rem;}
-  .card-result  { grid-area: result; width: fit-content; padding: .75rem;}
+  .card-input   { grid-area: input; width: fit-content; min-width:310px; padding: .75rem;}
+  .card-result  { grid-area: result; width: fit-content; min-width:310px;  padding: .75rem;}
   
   @media (max-width: 680px) {
     .card-container {
@@ -303,6 +313,7 @@ button.primary:hover {
     .card-result {
       width: auto !important; 
       max-width: 100%; 
+      min-width: none;
     }
     
     /* Control the visible space with textarea height instead */
@@ -313,14 +324,39 @@ button.primary:hover {
     }
   }
 
+  .custom-file-upload {
+    background-color: var(--cerulean);
+    color: white;
+    padding: 0.75em 1.5em;
+    border-radius: 6px;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    transition: background 0.2s ease;
+  }
+  
+  .custom-file-upload:hover {
+    background-color: #0081b5;
+  }  
+
+  .file-name {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
   .options-grid-layout {
     display: grid;
     grid-template-columns: 125px 160px 160px 160px;
     gap: .5rem;
-    align-items: start;
-    align-items: left;
-    -ms-grid-row-align: left;
-    -ms-grid-column-align: left;
+    align-items: center;
   }
 
   .card-input {
@@ -341,10 +377,10 @@ button.primary:hover {
   
   .card-title {
     grid-area: title;
-    text-align: center; /* center the title text */
-    text-align: top; /* align text to the top */
-    padding: 0; /* remove default padding */
-    margin: 0; /* remove default margin */
+    text-align: center; 
+    padding: 0; 
+    margin: 0; 
+    margin-top: .25rem;
     border: none;
   }
   .card-title h2 {

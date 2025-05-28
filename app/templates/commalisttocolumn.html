@@ -3,65 +3,73 @@
 {% set active = 'commalisttocolumn' %}
 
 {% block content %}
-  <h1>Convert Comma-Separated List to Column</h1>
-  <p>free tool to convert comma-separated lists into column entries for spreadsheets, database imports, SQL queries, and more</p>
-  <div class="flex-container">
-    <div>
-      <h2>Input:</h2>
-      <form method="POST">
-        {% include 'includes/_csrf.html' %}
-        <!-- delimiter field -->
-        <div class="form-row">
-          <label for="delimiter">delimiter:</label>
-          <input
-            id="delimiter"
-            type="text"
-            name="delimiter"
-            value="{{ delimiter or ',' }}"
-          />
+	<form method="POST">
+  {% include 'includes/_csrf.html' %}
+		<div class="card-container">
+
+			<!-- Title CARD -->
+      <div class="card card-title">
+        <h2>{{ page_title }}</h2>
+      </div>
+
+			<!-- OPTIONS CARD -->
+      <div class="card card-options">
+        <div class="options-grid-layout">
+          <!-- Left "Options" label -->
+          <div>
+            <h3>settings</h3>
+          </div>
+          <!-- Right: form inputs -->
+          <div>
+            <div class="form-row">
+              <label for="delimiter">delimiter:</label>
+              <input id="delimiter" type="text" name="delimiter" value="{{ delimiter or ',' }}" />
+            </div>
+          </div>
+          <div>
+            <div class="form-row">
+              <label for="sort_order">sort lines:</label>
+              <select id="sort_order" name="sort_order">
+                <option value="" {% if not sort_order %}selected{% endif %}>none</option>
+                <option value="asc" {% if sort_order=='asc' %}selected{% endif %}>A → Z</option>
+                <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Z → A</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="dedupe">de-dupe?:</label>
+              <input id="dedupe" type="checkbox" name="dedupe" {% if dedupe %}checked{% endif %} />
+            </div>          
+          </div>
         </div>
-
-        <div class="form-row">
-          <label for="sort_order">sort lines:</label>
-          <select id="sort_order" name="sort_order">
-            <option value=""   {% if not sort_order %}selected{% endif %}>none</option>
-            <option value="asc"  {% if sort_order=='asc' %}selected{% endif %}>A → Z</option>
-            <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Z → A</option>
-          </select>
+      </div>
+      
+			<!-- INPUT CARD -->
+			<div class="card card-input">
+				<div class="title-and-button">
+          <h3>input</h3>
+          <button type="submit" class="primary">convert</button>
         </div>
+				<textarea
+					name="comma_list"
+					rows="20" cols="40"
+					placeholder="paste your comma-seperated list here..."
+				>{{ comma_list or '' }}</textarea>
+			</div>
 
-        <!-- dedupe checkbox -->
-        <div class="form-row">
-          <label for="dedupe">de-dupe?:</label>
-          <input
-            id="dedupe"
-            type="checkbox"
-            name="dedupe"
-            {% if dedupe %}checked{% endif %}
-          />
+			<!-- RESULT CARD -->
+			<div class="card card-result">
+        <div class="title-and-button">
+          <h3>result</h3>
+  				<button type="button" class="primary" data-copy-target="#result-textarea">copy to clipboard</button>
         </div>
-        <br>
+				<textarea
+					id="result-textarea"
+					rows="20" cols="40"
+					readonly
+				>{% if result %}{{ result }}{% endif %}</textarea>
+			</div>
+      
 
-        <!-- submit button -->
-        <button type="submit" class="primary">Convert</button>
-        <br><br>
-
-        <!-- comma-list textarea -->
-        <textarea
-          name="comma_list"
-          rows="25"
-          cols="50"
-          placeholder="Paste your comma-separated list here..."
-        >{{ comma_list or '' }}</textarea>
-    </form>
-    </div>
-    <div>
-        <h2>Result:</h2>
-        <button type="button" class="primary" data-copy-target="#result-textarea">Copy to clipboard</button>
-        <br><br>
-        <textarea id="result-textarea" rows="25" cols="50" readonly>
-            {{- result -}}
-        </textarea>        
-    </div>
-  </div>
+		</div>
+	</form>
 {% endblock %}
