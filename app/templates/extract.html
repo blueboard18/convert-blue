@@ -1,58 +1,84 @@
+{# templates/extract.html #}
 {% extends 'base.html' %}
 {% set active = 'extract' %}
 
 {% block content %}
-  <h1>Extract Text Between Characters</h1>
-  <p>free tool to extract only the text found between two characters (like brackets, quotes, or custom markers) from each line in a column</p>
+<form method="POST">
+{% include 'includes/_csrf.html' %}
+  <div class="card-container">
 
-  <div class="flex-container">
-    <div>
-      <h2>Input:</h2>
-      <form method="POST">
-        {% include 'includes/_csrf.html' %}
+    <!-- Title CARD -->
+    <div class="card card-title">
+      <h2>{{ page_title }}</h2>
+    </div>
 
+    <!-- OPTIONS CARD -->
+    <div class="card card-options">
+      <div class="options-grid-layout">
+        <!-- Left "Options" label -->
+        <div>
+          <h3>settings</h3>
+        </div>
+        <!-- Right: form inputs -->
+        <div>
         <div class="form-row">
-          <label for="start_char">start char:</label>
+          <label for="start_char">start character:</label>
           <input id="start_char" name="start_char" type="text" maxlength="1" value="{{ start_char or '' }}" />
         </div>
-
         <div class="form-row">
-          <label for="end_char">end char:</label>
+          <label for="end_char">end character:</label>
           <input id="end_char" name="end_char" type="text" maxlength="1" value="{{ end_char or '' }}" />
         </div>
-
-        <div class="form-row">
-          <label for="sort_order">sort lines:</label>
-          <select id="sort_order" name="sort_order">
-            <option value=""   {% if not sort_order %}selected{% endif %}>none</option>
-            <option value="asc"  {% if sort_order=='asc' %}selected{% endif %}>A → Z</option>
-            <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Z → A</option>
-          </select>
         </div>
-
-        <div class="form-row">
-          <label for="dedupe">de-dupe?:</label>
-          <input
-            id="dedupe"
-            type="checkbox"
-            name="dedupe"
-            {% if dedupe %}checked{% endif %}
-          />
+        <div>             
+          <div class="form-row">
+            <label for="sort_order">sort lines:</label>
+            <select id="sort_order" name="sort_order">
+              <option value="" {% if not sort_order %}selected{% endif %}>none</option>
+              <option value="asc" {% if sort_order=='asc' %}selected{% endif %}>A → Z</option>
+              <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Z → A</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="dedupe">de-dupe?:</label>
+            <input id="dedupe" type="checkbox" name="dedupe" {% if dedupe %}checked{% endif %} />
+          </div>   
         </div>
+      </div>
+    </div>
+    
+    <!-- INPUT CARD -->
+    <div class="card card-input">
+      <div class="title-and-button">
+        <h3>input</h3>
+        <button type="submit" class="primary">convert</button>
+      </div>
+      <textarea
+        name="column_text"
+        rows="20" cols="40"
+        placeholder="paste your column text here...
 
-        <br>
-        <button type="submit" class="primary">Convert</button>
-        <br><br>
-
-        <textarea name="column_data" rows="25" cols="50" placeholder="Paste your column here...">{{ column_text or '' }}</textarea>
-      </form>
+        example:
+        asdf [123]
+        asdf [456]
+        asdf [789]"
+      >{{ column_text or '' }}</textarea>
     </div>
 
-    <div>
-      <h2>Result:</h2>
-      <button type="button" class="primary" data-copy-target="#result-textarea">Copy to clipboard</button>
-      <br><br>
-      <textarea id="result-textarea" rows="25" cols="50" readonly>{{ result }}</textarea>
+    <!-- RESULT CARD -->
+    <div class="card card-result">
+      <div class="title-and-button">
+        <h3>result</h3>
+        <button type="button" class="primary" data-copy-target="#result-textarea">copy to clipboard</button>
+      </div>
+      <textarea
+        id="result-textarea"
+        rows="20" cols="40"
+        readonly
+      >{% if result %}{{ result }}{% endif %}</textarea>
     </div>
+    
+
   </div>
+</form>
 {% endblock %}

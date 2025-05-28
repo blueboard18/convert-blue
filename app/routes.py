@@ -34,6 +34,10 @@ def sitemap():
     response.headers["Content-Type"] = "application/xml"
     return response
 
+@main.route('/robots.txt')
+def robots_txt():
+    return current_app.send_static_file('robots.txt')
+
 @main.app_errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
@@ -80,7 +84,7 @@ def index():
 
     return render_template(
         'index.html',
-        page_title="Column → Comma-Separated List",
+        page_title="convert column to comma-separated list",
         meta_description="Convert column data into comma-separated values for CSVs, SQL queries, or code — free, instant, no signup.",
         result=result,
         column_text=column_text,
@@ -114,7 +118,7 @@ def commalisttocolumn():
 
     return render_template(
         'commalisttocolumn.html',
-        page_title="Comma-Separated List → Column",
+        page_title="convert comma-separated list to column",
         meta_description="Convert comma-separated strings into clean column lists for spreadsheets, databases, and forms.",
         result=result,
         comma_list=comma_list,
@@ -135,13 +139,13 @@ def changecase():
     case_option = "upper"
 
     if request.method == 'POST':
-        text = request.form.get('text_input', '')
+        text = request.form.get('text', '')
         case_option = request.form.get('case_option', 'upper')
         result = convert_change_case(text, case_option)
 
     return render_template(
         'changecase.html',\
-        page_title="Change Case",
+        page_title="change case",
         meta_description="Change text case online — convert to UPPERCASE, lowercase, Title Case, snake_case, or kebab-case instantly.",
         result=result,
         text=text,
@@ -159,11 +163,11 @@ def findreplace():
     if request.method == 'POST':
         find_str    = request.form.get('find_str', '')
         replace_str = request.form.get('replace_str', '')
-        text        = request.form.get('text_input', '')
+        text        = request.form.get('text', '')
         result      = convert_find_replace(text, find_str, replace_str)
     return render_template(
         'findreplace.html',
-        page_title="Find & Replace",
+        page_title="find & replace",
         meta_description="Find and replace text across your input instantly — perfect for bulk edits, formatting, and cleanup.",
         result=result,
         find_str=find_str,
@@ -187,7 +191,7 @@ def extract():
     sort_order = ""
 
     if request.method == 'POST':
-        column_text = request.form.get('column_data', '')
+        column_text = request.form.get('column_text', '')
         start_char = request.form.get('start_char', '')
         end_char = request.form.get('end_char', '')
         dedupe = request.form.get('dedupe') == 'on'
@@ -202,7 +206,7 @@ def extract():
 
     return render_template(
         'extract.html',
-        page_title="Extract Text Between Characters",
+        page_title="extract column text between characters",
         meta_description="Extract text between any two characters on each line — perfect for grabbing IDs, tags, values, or custom patterns from your data.",
         result=result,
         column_text=column_text,
@@ -261,12 +265,13 @@ def dpi():
 
     return render_template(
         'dpi.html',
-        page_title="Image DPI Converter",
+        page_title="convert image dpi (dots per image)",
         meta_description="Change image DPI for print or web. Upload PNG, JPG, or more and set a new resolution — download instantly.",
         original_dpi=original_dpi,
         result_image=result_image,
         dpi_choice=dpi_choice,
         dpi=dpi,
+        original_name=original_name,
         breadcrumb_items=[
             {"name": "Home", "url": url_for('main.index', _external=True)},
             {"name": "Image DPI Converter", "url": request.base_url}
