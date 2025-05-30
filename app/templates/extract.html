@@ -21,15 +21,19 @@
         </div>
         <!-- Right: form inputs -->
         <div>
-        <div class="form-row">
-          <label for="start_char">start character:</label>
-          <input id="start_char" name="start_char" type="text" maxlength="1" value="{{ start_char or '' }}" />
+          <div class="form-row">
+            <label for="start_char">start character:</label>
+            <input id="start_char" name="start_char" type="text" maxlength="1" value="{{ start_char or '' }}" />
+          </div>
+          <div class="form-row">
+            <label for="end_char">end character:</label>
+            <input id="end_char" name="end_char" type="text" maxlength="1" value="{{ end_char or '' }}" />
+          </div>
         </div>
         <div class="form-row">
-          <label for="end_char">end character:</label>
-          <input id="end_char" name="end_char" type="text" maxlength="1" value="{{ end_char or '' }}" />
-        </div>
-        </div>
+          <label for="reverse">reverse?:</label>
+          <input id="reverse" type="checkbox" name="reverse" {% if reverse %}checked{% endif %} />
+        </div>   
         <div>             
           <div class="form-row">
             <label for="sort_order">sort lines:</label>

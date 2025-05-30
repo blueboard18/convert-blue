@@ -202,6 +202,7 @@ def extract():
     end_char = "]"
     dedupe = False
     sort_order = ""
+    reverse = False
 
     if request.method == 'POST':
         column_text = request.form.get('column_text', '')
@@ -209,12 +210,14 @@ def extract():
         end_char = request.form.get('end_char', '')
         dedupe = request.form.get('dedupe') == 'on'
         sort_order = request.form.get('sort_order', '')
+        reverse = request.form.get('reverse') == 'on'
 
         if start_char and end_char:
             result = extract_text_between_chars(
                 column_text, start_char, end_char,
                 dedupe=dedupe,
-                sort_order=sort_order
+                sort_order=sort_order,
+                reverse=reverse
             )
 
     return render_template(
@@ -227,6 +230,7 @@ def extract():
         end_char=end_char,
         dedupe=dedupe,
         sort_order=sort_order,
+        reverse=reverse,
         breadcrumb_items=[
             {"name": "Home", "url": url_for('main.index', _external=True)},
             {"name": "Extract Text", "url": request.base_url}

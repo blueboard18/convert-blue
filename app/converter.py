@@ -83,7 +83,7 @@ def convert_change_case(text, case_option):
 def convert_find_replace(text, find_str, replace_str):
     return text.replace(find_str, replace_str)
 
-def extract_text_between_chars(text, start_char, end_char, dedupe=False, sort_order=None):
+def extract_text_between_chars(text, start_char, end_char, dedupe=False, sort_order=None, reverse=False):
 
     # escape user inputs in case they include regex symbols
     re_start = re.escape(start_char)
@@ -93,12 +93,16 @@ def extract_text_between_chars(text, start_char, end_char, dedupe=False, sort_or
     # clean up lines
     lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
     
-    # extract from each line
-    extracted = [match.group(1) for line in lines if (match := re.search(pattern, line))]
+    if reverse:
+        # Remove the matched portion (start_char through end_char)
+        processed = [re.sub(pattern, '', line) for line in lines]
+    else:
+        # Extract only the matched content
+        processed = [match.group(1) for line in lines if (match := re.search(pattern, line))]
 
-    # apply deduplication and sorting
-    extracted = process_items(extracted, dedupe=dedupe, sort_order=sort_order)
-    return "\n".join(extracted)
+    # Apply deduplication and sorting
+    processed = process_items(processed, dedupe=dedupe, sort_order=sort_order)
+    return "\n".join(processed)
 
 def convert_image_dpi(image, new_dpi):
     buffer = io.BytesIO()
