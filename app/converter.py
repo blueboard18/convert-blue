@@ -109,3 +109,42 @@ def convert_image_dpi(image, new_dpi):
     image.save(buffer, format=image.format, dpi=(new_dpi, new_dpi))
     buffer.seek(0)
     return buffer, image.format
+
+def convert_binary(text, reverse=False):
+    if reverse:
+        try:
+            # Validate and convert binary to text
+            bytes_ = text.strip().split()
+            text = ''.join(chr(int(byte, 2)) for byte in bytes_)
+        except ValueError:
+            return "⚠️ Invalid binary input"
+    else:
+        # Convert text to binary string
+        text = ' '.join(format(ord(char), '08b') for char in text)
+    return text
+
+def convert_ascii(text, reverse=False):
+    if reverse:
+        try:
+            # Validate and convert ASCII to text
+            bytes_ = text.strip().split()
+            text = ''.join(chr(int(byte)) for byte in bytes_)
+        except ValueError:
+            return "⚠️ Invalid ASCII input"
+    else:
+        # Convert text to ASCII string
+        text = ' '.join(str(ord(char)) for char in text)
+    return text
+
+def convert_hex(text, reverse=False):
+    if reverse:
+        try:
+            # Validate and convert hex to text
+            bytes_ = text.strip().split()
+            text = ''.join(chr(int(byte, 16)) for byte in bytes_)
+        except ValueError:
+            return "⚠️ Invalid hex input"
+    else:
+        # Convert text to hex string
+        text = ' '.join(format(ord(char), '02x') for char in text)
+    return text

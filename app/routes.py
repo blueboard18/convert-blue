@@ -5,7 +5,10 @@ from .converter import (
     convert_change_case,
     convert_find_replace,
     extract_text_between_chars,
-    convert_image_dpi
+    convert_image_dpi,
+    convert_binary,
+    convert_ascii,
+    convert_hex
 )
 from datetime import date
 from . import limiter
@@ -292,6 +295,81 @@ def dpi():
         breadcrumb_items=[
             {"name": "Home", "url": url_for('main.index', _external=True)},
             {"name": "Image DPI Converter", "url": request.base_url}
+        ]
+    )
+
+@main.route('/binary', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def binary():
+    result = ""
+    text = ""
+    reverse = False
+
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        reverse = request.form.get('reverse') == 'on'
+        result = convert_binary(text, reverse=reverse)
+
+    return render_template(
+        'binary.html',
+        page_title="convert text to binary",
+        meta_description="Convert text to binary code instantly — turn letters, numbers, and punctuation into 1s and 0s for encoding, data representation, or fun.",
+        result=result,
+        text=text,
+        reverse=reverse,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Convert Text To Binary", "url": request.base_url}
+        ]
+    )
+
+@main.route('/ascii', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def ascii():
+    result = ""
+    text = ""
+    reverse = False
+
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        reverse = request.form.get('reverse') == 'on'
+        result = convert_ascii(text, reverse=reverse)
+
+    return render_template(
+        'ascii.html',
+        page_title="convert text to ascii",
+        meta_description="Convert text to ASCII codes and ASCII codes back to text — a quick and easy tool for encoding characters or decoding numeric values.",
+        result=result,
+        text=text,
+        reverse=reverse,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Convert Text To Binary", "url": request.base_url}
+        ]
+    )
+
+@main.route('/hex', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def hex():
+    result = ""
+    text = ""
+    reverse = False
+
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        reverse = request.form.get('reverse') == 'on'
+        result = convert_hex(text, reverse=reverse)
+
+    return render_template(
+        'hex.html',
+        page_title="convert text to hex",
+        meta_description="Convert text to hexadecimal and back — easily encode characters as hex values or decode hex to readable text for debugging, encoding, or web development.",
+        result=result,
+        text=text,
+        reverse=reverse,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Convert Text To Binary", "url": request.base_url}
         ]
     )
 
