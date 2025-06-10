@@ -8,3 +8,6 @@ __pycache__/
 # Ignore virtual environments (optional, if you're using one)
 venv/
 env/
+
+# Ignore Flask webassets cache
+app/static/.webassets-cache/
