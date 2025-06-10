@@ -133,17 +133,9 @@
         class="{% if active=='dpi' %}active{% endif %}">
         dpi converter
       </a>
-      <a href="{{ url_for('main.binary') }}"
-      class="{% if active=='binary' %}active{% endif %}">
-        binary
-    </a>
-      <a href="{{ url_for('main.ascii') }}"
-      class="{% if active=='ascii' %}active{% endif %}">
-        ascii
-    </a>
-      <a href="{{ url_for('main.hex') }}"
-      class="{% if active=='hex' %}active{% endif %}">
-        hex
+      <a href="{{ url_for('main.tools') }}"
+      class="{% if active=='tools' %}active{% endif %}">
+        all converter tools
     </a>
     </nav>  
     {% block content %}{% endblock %}

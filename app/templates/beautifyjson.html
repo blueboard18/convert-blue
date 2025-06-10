@@ -1,4 +1,4 @@
-{# templates/ascii.html #}
+{# templates/beautifyjson.html #}
 {% extends 'base.html' %}
 {% set active = 'none' %}
 
@@ -10,23 +10,6 @@
       <!-- Title CARD -->
       <div class="card card-title">
         <h2>{{ page_title }}</h2>
-      </div>
-
-      <!-- OPTIONS CARD -->
-      <div class="card card-options">
-        <div class="options-grid-layout">
-          <!-- Left "Options" label -->
-          <div>
-            <h3>settings</h3>
-          </div>
-          <!-- Right: form inputs -->
-          <div>
-            <div class="form-row">
-              <label for="reverse">reverse?:</label>
-              <input id="reverse" type="checkbox" name="reverse" {% if reverse %}checked{% endif %} />
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- INPUT CARD -->

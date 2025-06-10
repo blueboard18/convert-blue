@@ -8,7 +8,11 @@ from .converter import (
     convert_image_dpi,
     convert_binary,
     convert_ascii,
-    convert_hex
+    convert_hex,
+    beautify_json,
+    convert_url,
+    convert_base64,
+    convert_morse_code
 )
 from datetime import date
 from . import limiter
@@ -344,7 +348,7 @@ def ascii():
         reverse=reverse,
         breadcrumb_items=[
             {"name": "Home", "url": url_for('main.index', _external=True)},
-            {"name": "Convert Text To Binary", "url": request.base_url}
+            {"name": "Convert Text To ASCII", "url": request.base_url}
         ]
     )
 
@@ -369,7 +373,116 @@ def hex():
         reverse=reverse,
         breadcrumb_items=[
             {"name": "Home", "url": url_for('main.index', _external=True)},
-            {"name": "Convert Text To Binary", "url": request.base_url}
+            {"name": "Convert Text To Hex", "url": request.base_url}
+        ]
+    )
+
+@main.route('/beautifyjson', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def beautifyjson():
+    result = ""
+    text = ""
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        result = beautify_json(text)
+    
+    return render_template(
+        'beautifyjson.html',
+        page_title="beautify json",
+        meta_description="Paste any JSON and make it readable with pretty indentation. Great for debugging or formatting API responses.",
+        text=text,
+        result=result,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Beautify JSON text", "url": request.base_url}
+        ]    
+    )
+
+@main.route('/urlencoder', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def urlencoder():
+    result = ""
+    text = ""
+    reverse = False
+
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        reverse = request.form.get('reverse') == 'on'
+        result = convert_url(text, reverse)
+    
+    return render_template(
+        'urlencoder.html',
+        page_title="text to url",
+        meta_description="Convert text to URL-safe encoding or decode URL-encoded strings — useful for links, query strings, and more.",
+        text=text,
+        result=result,
+        reverse=reverse,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Convert Text To URL", "url": request.base_url}
+        ]    
+    )
+
+@main.route('/base64', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def base64():
+    result = ""
+    text = ""
+    reverse = False
+
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        reverse = request.form.get('reverse') == 'on'
+        result = convert_base64(text, reverse)
+    
+    return render_template(
+        'base64.html',
+        page_title="text to base64",
+        meta_description="Convert any text to base64 or decode base64 back to text — perfect for safe data encoding in URLs, emails, or APIs.",
+        text=text,
+        result=result,
+        reverse=reverse,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Convert Text To Base64", "url": request.base_url}
+        ]    
+    )
+
+@main.route('/morsecode', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def morsecode():
+    result = ""
+    text = ""
+    reverse = False
+
+    if request.method == 'POST':
+        text = request.form.get('text', '')
+        reverse = request.form.get('reverse') == 'on'
+        result = convert_morse_code(text, reverse=reverse)
+
+    return render_template(
+        'morsecode.html',
+        page_title="convert text to morse code",
+        meta_description="Convert text to Morse code or decode Morse code back into plain text — great for fun, learning, or puzzles.",
+        result=result,
+        text=text,
+        reverse=reverse,
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "Convert Text To Morse Code", "url": request.base_url}
+        ]
+    )
+
+@main.route('/tools', methods=['GET', 'POST'])
+@limiter.limit("10 per minute")
+def tools():
+    return render_template(
+        'tools.html',
+        page_title="all converter tools",
+        meta_description="Explore a full suite of free online converters for text and image formats — convert lists, case styles, ASCII, binary, hex, image DPI, file types (JPG, PNG, WebP, PDF), and more. Fast, secure, no signup needed.",
+        breadcrumb_items=[
+            {"name": "Home", "url": url_for('main.index', _external=True)},
+            {"name": "All Converter Tools", "url": request.base_url}
         ]
     )
 

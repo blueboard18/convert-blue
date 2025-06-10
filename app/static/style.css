@@ -1,25 +1,25 @@
 @font-face {
-    font-family: 'Inter';
-    src: url('/static/fonts/Inter/static/Inter_18pt-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-  }
+  font-family: 'Inter';
+  src: url('/static/fonts/Inter/static/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
   
-  @font-face {
-    font-family: 'Inter';
-    src: url('/static/fonts/Inter/static/Inter_18pt-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'Inter';
+  src: url('/static/fonts/Inter/static/Inter_18pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
 
-  :root {
-    --cerulean:        #00A8E8;
-    --ink:             #003366;
-    --blue:            #0A45F5;
-    --purple:          #3700BC;
-    --magenta:         #EC4899;
-    --lightgrey:       #e6e6e6;
-  }
+:root {
+  --cerulean:        #00A8E8;
+  --ink:             #003366;
+  --blue:            #0A45F5;
+  --purple:          #3700BC;
+  --magenta:         #EC4899;
+  --lightgrey:       #e6e6e6;
+}
 
 body {
   font-family: 'Inter', sans-serif;
@@ -27,11 +27,10 @@ body {
   padding: 0; 
   padding-top: 0; 
   font-size: 1rem;
-
 }
   
 textarea {
-	font-family: 'Inter', sans-serif;  /* or whatever font you want */;
+	font-family: 'Inter', sans-serif;  ;
   color: var(--ink);
   resize: vertical;
 }
@@ -81,8 +80,6 @@ button.primary {
   font-weight: 700;
 }
 
-
-
 /* Apply it on hover */
 button.primary:hover {
   cursor: pointer;
@@ -98,6 +95,7 @@ button.primary:hover {
   position: relative;
   justify-content: center;
 }
+
 .tabs a {
   text-decoration: none;
   padding: 0.5rem 1rem;
@@ -106,6 +104,7 @@ button.primary:hover {
   border-radius: 5px;
   position: relative;
 }
+
 .tabs a.active {
   font-weight: bold;
 }
@@ -159,7 +158,6 @@ button.primary:hover {
   color: var(--blue);
   font-weight: 700;
 }
-
 
 /* round edge cells
 .changecase-options label:nth-of-type(1) { border-top-left-radius:5px; }
@@ -264,8 +262,6 @@ button.primary:hover {
 .dpi-grid input[type="radio"]:checked + label.dpi-other-label + .dpi-other-wrapper {
   background-color: var(--lightgrey);
 }
-
-
 
 /* ————————————————————
    Card layout for index.html
@@ -422,6 +418,13 @@ button.primary:hover {
     max-width: 680px; /* or match .card-container width */
     margin: 0 auto;   /* centers the container */
     padding: 0;  /* optional side padding for small screens */
+  }
+
+  .tools-list {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem; /* space between items */
+    padding: 0.5rem; /* optional padding */
   }
   
   #hamburger-button {

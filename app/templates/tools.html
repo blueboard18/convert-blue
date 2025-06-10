@@ -1,0 +1,42 @@
+{# templates/tools.html #}
+{% extends 'base.html' %}
+{% set active = 'tools' %}
+
+{% block content %}
+
+<div class="card-container">
+
+    <!-- Title CARD -->
+    <div class="card card-title">
+        <h2>{{ page_title }}</h2>
+    </div>
+
+    <!-- OPTIONS CARD -->
+    <div class="card card-options">
+        <div class ="tools-list">
+            <div>
+                <h3>text tools</h3>
+                <p> <a href="{{ url_for('main.index') }}">column → comma-separated list</a> </p>
+                <p> <a href="{{ url_for('main.commalisttocolumn') }}">comma-separated list → column</a> </p>
+                <p> <a href="{{ url_for('main.changecase') }}">change case</a> </p>
+                <p> <a href="{{ url_for('main.findreplace') }}">find & replace</a> </p>
+                <p> <a href="{{ url_for('main.extract') }}">extract text</a> </p>
+                <p> <a href="{{ url_for('main.beautifyjson') }}">beautify json</a> </p>
+                <p> <a href="{{ url_for('main.hex') }}">text to hex</a> </p>
+                <p> <a href="{{ url_for('main.binary') }}">text to binary</a> </p>
+                <p> <a href="{{ url_for('main.ascii') }}">text to ascii</a> </p>
+                <p> <a href="{{ url_for('main.urlencoder') }}">text to url</a> </p>
+                <p> <a href="{{ url_for('main.base64') }}">text to base64</a> </p>
+                <p> <a href="{{ url_for('main.morsecode') }}">text to morse code</a> </p>
+            </div>
+            <div>
+                <h3>image tools</h3>
+                <p>
+                    <a href="{{ url_for('main.dpi') }}">image dpi converter</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

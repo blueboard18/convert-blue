@@ -1,6 +1,9 @@
 import re
 from PIL import Image
 import io
+import json
+import urllib.parse
+import base64
 
 # numeric-aware sort key: tuples ensure floats only compare to floats,
 # and strings only to strings
@@ -148,3 +151,70 @@ def convert_hex(text, reverse=False):
         # Convert text to hex string
         text = ' '.join(format(ord(char), '02x') for char in text)
     return text
+
+def beautify_json(text):
+    try:
+        parsed = json.loads(text)
+        return json.dumps(parsed, indent=2)
+    except json.JSONDecodeError as e:
+        return f"Error: Invalid JSON – {str(e)}"
+
+def convert_url(text, reverse=False):
+    if reverse:
+        return urllib.parse.unquote(text)
+    else:
+        return urllib.parse.quote(text)
+    
+def convert_base64(text, reverse=False):
+    if reverse:
+        try:
+            decoded = base64.b64decode(text.encode('utf-8')).decode('utf-8')
+        except Exception as e:
+            return f"[error decoding base64: {str(e)}]"
+        return decoded
+    else:
+        return base64.b64encode(text.encode('utf-8')).decode('utf-8')
+    
+MORSE_CODE_DICT = {
+    'A': '.-',     'B': '-...',   'C': '-.-.', 
+    'D': '-..',    'E': '.',      'F': '..-.',
+    'G': '--.',    'H': '....',   'I': '..',
+    'J': '.---',   'K': '-.-',    'L': '.-..',
+    'M': '--',     'N': '-.',     'O': '---',
+    'P': '.--.',   'Q': '--.-',   'R': '.-.',
+    'S': '...',    'T': '-',      'U': '..-',
+    'V': '...-',   'W': '.--',    'X': '-..-',
+    'Y': '-.--',   'Z': '--..',
+    '0': '-----',  '1': '.----',  '2': '..---',
+    '3': '...--',  '4': '....-',  '5': '.....',
+    '6': '-....',  '7': '--...',  '8': '---..',
+    '9': '----.',
+    '&': '.-...',  "'": '.----.', '@': '.--.-.',
+    ')': '-.--.-', '(': '-.--.',  ':': '---...',
+    ',': '--..--', '=': '-...-',  '!': '-.-.--',
+    '.': '.-.-.-', '-': '-....-', '+': '.-.-.',
+    '"': '.-..-.', '?': '..--..', '/': '-..-.',
+    ' ': '/'
+}
+REVERSE_MORSE_CODE_DICT = {v: k for k, v in MORSE_CODE_DICT.items()}
+
+def convert_morse_code(text, reverse=False):
+    if reverse:
+        try:
+            words = text.strip().split(' / ')
+            decoded = []
+            for word in words:
+                chars = word.strip().split()
+                decoded_word = ''.join(REVERSE_MORSE_CODE_DICT.get(c, '?') for c in chars)
+                decoded.append(decoded_word)
+            return ' '.join(decoded)
+        except Exception as e:
+            return f"[error decoding morse: {str(e)}]"
+    else:
+        result = []
+        for char in text.upper():
+            if char in MORSE_CODE_DICT:
+                result.append(MORSE_CODE_DICT[char])
+            else:
+                result.append('?')
+        return ' '.join(result)
