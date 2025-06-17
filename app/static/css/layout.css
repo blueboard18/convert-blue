@@ -1,0 +1,187 @@
+
+/* card container layout */
+.card-container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-template-areas:
+        "title title"
+        "options options"
+        "input  result";
+    align-items: start;
+    justify-content: center;
+    gap: .5rem;  
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 1rem;
+}
+  
+.card-title   { grid-area: title; width: auto;}
+.card-options { grid-area: options; width: auto; padding: .75rem; margin-top: 0;}
+.card-input   { grid-area: input; width: fit-content; min-width:310px; padding: .75rem;}
+.card-result  { grid-area: result; width: fit-content; min-width:310px;  padding: .75rem;}
+  
+.options-grid-layout {
+    display: grid;
+    grid-template-columns: 120px 175px 170px 140px;
+    gap: .5rem;
+    align-items: center;
+}
+
+.card-input {
+    grid-area: input;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+  
+.card-result {
+    grid-area: result;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+/* END card container layout */  
+
+/* General form styles */
+.form-row {
+    display: flex;
+    align-items: center;
+    font-size: small;
+    margin-bottom: 0.15rem; 
+}
+  
+.form-row label {
+    width: 6.35em;            /* enough to cover your longest label text */
+    margin-right: 0rem;
+}
+  
+.form-row input,
+.form-row textarea {
+    width: 40px;
+}
+
+.form-row input[type="checkbox"] {
+    margin-left: 0;
+    margin-right: auto;
+    transform: translateX(-.99rem); /* optional: fine-tune vertical alignment */
+}
+  
+.form-row input[name="find_str"],
+.form-row input[name="replace_str"]{
+    width: 155px;
+    min-width: 0;
+    grid-column: span 3;  /* Try to span multiple columns if possible */
+}
+  
+.form-row label[for="start_char"],
+.form-row label[for="end_char"]{
+    width: 99px ;
+}
+/* END General form styles */
+
+/* title and heading styles */
+.card-title {
+    grid-area: title;
+    text-align: center; 
+    padding: 0; 
+    margin: 0; 
+    margin-top: .25rem;
+    border: none;
+}
+
+.card-title h2 {
+    margin-top: 0;
+    margin-bottom: 0.25rem; /* or 0 if you want it flush */
+    line-height: 1;        /* tighten line height */
+}
+  
+.title-and-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.title-and-button h3 {
+    margin: 0;                 /* remove default margins just in case */
+}
+/* END title and heading styles */
+  
+/* mobile and large screen breakpoints */
+@media (max-width: 680px) {
+    .card-container {
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+        "title"
+        "options"
+        "input"
+        "result";
+    }
+    .card-input,
+    .card-result {
+        width: auto !important; 
+        max-width: 100%; 
+        min-width: none;
+    }
+    
+    /* Control the visible space with textarea height instead */
+    .card-input textarea,
+    .card-result textarea {
+        min-height: 10rem !important;
+        max-height: 10rem !important;
+    }
+}
+  
+@media (min-width: 1720px) {
+    .card-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 2rem;
+    }
+  
+    .tabs a, 
+    .form-row,
+    .card-input textarea,
+    .card-result textarea {
+        font-size: medium !important;
+    }
+  
+    .tabs {
+        gap: .5rem; /* increase the height of the active tab indicator */
+    }
+  
+    h2 {
+        font-size: 2rem;
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
+    .card {
+        padding: 1.25rem;
+    }
+    .card-container {
+        gap: 1rem;  
+    }
+    .options-grid-layout {
+        grid-template-columns: 125px 225px 225px 225px !important;
+    }
+  
+    .form-row input
+    .form-row input[name="find_str"],
+    .form-row input[name="replace_str"]
+    .form-row label[for="start_char"],
+    .form-row label[for="end_char"]{
+        width: 160px !important;
+    }  
+  
+    .card-input textarea,
+    .card-result textarea {
+        font-size: 1.1rem;
+    }
+}
+/* END breakpoints */

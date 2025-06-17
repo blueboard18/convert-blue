@@ -34,7 +34,10 @@ def create_app():
 
     # CSS bundle: style.css → gen/style.min.css
     css_bundle = Bundle(
-        'style.css',
+        'css/base.css',
+        'css/components.css',
+        'css/layout.css',
+        'css/unique_forms.css',
         filters='cssmin',
         output='gen/style.min.css'
     )

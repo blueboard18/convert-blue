@@ -1,0 +1,168 @@
+/* Define the pulse animation for buttons */
+@keyframes pulse-colors {
+    0% {
+        background-color: var(--blue);
+    }
+  
+    100% {
+        background-color: var(--magenta);
+    }
+}
+
+/* Define the gradient animation for tabs */
+@keyframes gradient-slide {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+  
+/* default button style */
+button.primary {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+button.primary:hover {
+    cursor: pointer;
+    animation: pulse-colors 2s infinite alternate;
+}
+/* END default button style */
+  
+  
+/* top navigation menu tabs styles */
+.tabs {
+    display: flex;
+    gap: 0rem;
+    margin-bottom: 1rem;
+    padding-bottom: .25rem;
+    border-bottom: 1px solid grey;
+    position: relative;
+    justify-content: center;
+}
+
+.tabs a {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    color: var(--ink);
+    font-size: small;
+    border-radius: 5px;
+    position: relative;
+}
+
+.tabs a.active {
+    font-weight: bold;
+}
+  
+.tabs a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.45rem;
+    left: 0;
+    right: 0;
+    height: 5px;
+  
+    background-image: linear-gradient(
+        to right,
+        var(--blue),
+        var(--cerulean),
+        var(--purple),
+        var(--magenta),
+        var(--blue) /* repeat first color for smoother loop */
+    );
+    background-size: 300% 100%;
+    background-position: 0% 50%;
+    animation: gradient-slide 4s linear infinite alternate;
+}
+  
+.logo-container {
+    text-align: left;
+}
+  
+.logo-container img {
+    max-height: 35px;  
+    height: auto;
+}
+/* END top navigation menu tabs styles */
+  
+/* custom file upload button */
+.custom-file-upload {
+    background-color: var(--cerulean);
+    color: white;
+    padding: 0.75em 1.5em;
+    border-radius: 6px;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    transition: background 0.2s ease;
+}
+  
+.custom-file-upload:hover {
+    background-color: #0081b5;
+}  
+
+.file-name {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+/* END custom file upload button */
+  
+/* Hamburger menu styles */
+.hamburger-container {
+    position: relative;
+    padding-right: .5rem; 
+}
+  
+#hamburger-button {
+    font-size: 38px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--blue);
+    padding: 0; 
+    margin: 0;
+}
+
+#hamburger-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 105%;         /* directly below button */
+    right: 0;
+    background-color: white;
+    border: 1px solid var(--lightgrey);
+    border-radius: 5px;
+    padding: 0.25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    min-width: 160px;
+    z-index: 1000;
+}
+
+#hamburger-nav a {
+    padding: .15rem 0;
+    text-indent: 10%;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+#hamburger-nav a:hover {
+    background-color: var(--lightgrey);
+}
+/* END Hamburger menu styles */
